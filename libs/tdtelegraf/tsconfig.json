@@ -1,0 +1,12 @@
+{
+  "extends": "@lskjs/tsconfig/nostrict/tsconfig.json",
+  "compilerOptions": {
+    "strictPropertyInitialization": false,
+    "sourceMap": true,
+    "declaration": true,
+    "ignoreDeprecations": "5.0",
+    // "module": "esnext",
+    "moduleResolution": "NodeNext"
+  }
+}
+

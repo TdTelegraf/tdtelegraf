@@ -1,0 +1,55 @@
+{
+  "name": "tdtelefraf",
+  "version": "1.0.0",
+  "description": "",
+  "author": "isuvorov",
+  "scripts": {
+    "start": "          pnpm -r run start",
+    "dev": "            concurrently -k npm:dev:*",
+    "build": "          lsk run build",
+    "test": "           echo ok",
+    "prepack": "        lsk run prepack",
+    "release": "        lsk run release",
+    "debug": "DEBUG=lsk concurrently -k npm:dev:*",
+    "dev:app": "cd apps/app && npm run dev",
+    "_dev:api": "cd apps/api && npm run dev",
+    "_dev:web": "cd apps/web && npm run dev"
+  },
+  "devDependencies": {
+    "@lskjs/cli-scripts": "^3.18.0",
+    "@lskjs/cli-utils": "^3.18.0",
+    "@lskjs/eslint-config": "^3.18.0",
+    "@lskjs/jest-config": "^3.18.0",
+    "@lskjs/tsconfig": "^3.18.0",
+    "concurrently": "^8.2.2",
+    "lsk": "^3.18.0",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.2.2"
+  },
+  "//": "///////////========================/////////========================/////////========================/////////",
+  "prettier": "@lskjs/eslint-config/prettier",
+  "eslintConfig": {
+    "settings": {
+      "import/resolver": {
+        "typescript": {
+          "project": [
+            "tsconfig.json",
+            "apps/*/tsconfig.json"
+          ]
+        }
+      }
+    },
+    "extends": "@lskjs/eslint-config"
+  },
+  "jest": {
+    "preset": "@lskjs/jest-config"
+  },
+  "main": "index.js",
+  "///": "//////////========================/////////========================/////////========================/////////",
+  "license": "ISC",
+  "keywords": [],
+  "////": "/////////========================/////////========================/////////========================/////////",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

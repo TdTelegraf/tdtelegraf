@@ -1,0 +1,7 @@
+node_modules
+libs/*/lib
+libs/*/.release
+libs/*/.reports
+tdlib
+**/.env*
+__*
