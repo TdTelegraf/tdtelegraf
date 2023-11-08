@@ -11,7 +11,7 @@ on:
     paths-ignore:
       - '**.md'
 
-      
+
 env:
   NODE_VERSION: 20.5.1
   PNPM_VERSION: 8.7.5
@@ -21,10 +21,10 @@ jobs:
   prepare:
     if: contains(github.event.head_commit.message , 'chore(release)') == false
     runs-on: ubuntu-22.0
-    permissions:
-      contents: write
-      packages: write
-      pull-requests: write
+    # permissions:
+    #   contents: write
+    #   packages: write
+    #   pull-requests: write
     steps:
       - name: GIT – Checkout
         uses: actions/checkout@v4
