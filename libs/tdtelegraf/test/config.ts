@@ -29,4 +29,4 @@ configure({
 });
 
 export const debugChatId = -4034510711;
-export const debugUserId = 1227280
+export const debugUserId = 1227280;
