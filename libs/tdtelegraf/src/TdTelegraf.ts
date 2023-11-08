@@ -1,24 +1,15 @@
 // import { Context } from 'telegraf/lib/context';
 // import { Logger } from '@lskjs/log';
 import { mkdirSync } from 'node:fs';
-import { mkdir, writeFile } from 'node:fs/promises';
 
 import { omit } from '@lskjs/algos';
-import { isDev } from '@lskjs/env';
 import { Logger } from '@lskjs/log';
 import { Client, ClientOptions, createClient } from 'tdl';
 import { Context, Telegraf } from 'telegraf';
 
 import { callApi } from './callApi';
+import { saveMock } from './debug';
 import { convertBotInfo, convertToTelegrafMessage } from './utils';
-
-const saveMock = async (name, data) => {
-  if (isDev) {
-    const dirname = `${__dirname}/../../../__mocks`;
-    await mkdir(dirname, { recursive: true });
-    await writeFile(`${dirname}/${name}`, JSON.stringify(data, null, 2));
-  }
-};
 
 const ignoredActions = [
   'init',
