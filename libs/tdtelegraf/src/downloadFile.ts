@@ -10,6 +10,7 @@ function generateRandomFilename() {
   return `${timestamp}-${randomString}`;
 }
 
+// TODO: do not save file on disk, just return buffer
 export const downloadFile = async (url, directoryPath) => {
   // Generate a random filename
   const filename = generateRandomFilename();
