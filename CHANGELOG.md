@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/TdTelegraf/tdtelegraf/compare/v0.3.0...v0.3.6) (2023-11-08)
+
+
+### Bug Fixes
+
+* downloadFIle ([fbe2566](https://github.com/TdTelegraf/tdtelegraf/commit/fbe2566c08cb52419829a9281c138991f6975363))
+* export * from root ([6b641a1](https://github.com/TdTelegraf/tdtelegraf/commit/6b641a1aa573c4a91d42e6a66b0901c49ceae433))
+
+
+
+
+
 # 0.3.0 (2023-11-08)
 
 
