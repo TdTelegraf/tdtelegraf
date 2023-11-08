@@ -12,6 +12,7 @@
     "release": "        lsk run release"
   },
   "devDependencies": {
+    "@lskjs/cli-scripts": "^3.18.0",
     "@lskjs/eslint-config": "^3.8.1",
     "@lskjs/jest-config": "^3.8.1",
     "@lskjs/tsconfig": "^3.8.1",
