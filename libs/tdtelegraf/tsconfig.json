@@ -5,7 +5,7 @@
     "sourceMap": true,
     "declaration": true,
     "ignoreDeprecations": "5.0",
-    // "module": "esnext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext"
   }
 }
