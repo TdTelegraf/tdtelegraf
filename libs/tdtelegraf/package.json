@@ -1,9 +1,9 @@
 {
   "name": "tdtelefraf",
   "version": "0.2.0",
-  "description": "",
+  "description": "Crossover Tdlib with Telegraf framework – easy way to create Telegram bots with Telegram personal accounts",
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "        nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
     "dev": "          lsk run dev",
@@ -18,7 +18,6 @@
     "@lskjs/log": "^3.18.0",
     "@lskjs/telegraf": "^3.18.0",
     "axios": "^1.6.0",
-    "dotenv": "^16.3.1",
     "fishbird": "^0.21.0",
     "prebuilt-tdlib": "^0.1008019.0",
     "tdl": "^7.4.0",
@@ -28,6 +27,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
+    "dotenv": "^16.3.1",
     "source-map-support": "^0.5.21"
   },
   "//": "///////////========================/////////========================/////////========================/////////",
@@ -40,11 +40,28 @@
   },
   "files": [
     "lib",
-    "files",
-    "Dockerfile",
-    "docker-stack.yml"
+    "README.md",
+    "LICENCE"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./*": {
+      "import": "./lib/*.mjs",
+      "types": "./lib/*.d.ts",
+      "default": "./lib/*.js"
+    }
+  },
   "///": "//////////========================/////////========================/////////========================/////////",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "////": "/////////========================/////////========================/////////========================/////////"
 }
