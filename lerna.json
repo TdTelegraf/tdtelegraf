@@ -1,0 +1,22 @@
+{
+  "version": "0.1.0",
+  "npmClient": "pnpm",
+  "debug": {
+    "useWorkspaces": true
+  },
+  "command": {
+    "publish": {
+      "allowBranch": [
+        "master",
+        "beta"
+      ],
+      "conventionalCommits": true,
+      "ignoreChanges": [
+        "ignored-file",
+        "pnpm-lock.yaml",
+        "*.md"
+      ],
+      "message": "chore(release): 🎉 publish %s"
+    }
+  }
+}
