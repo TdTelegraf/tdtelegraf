@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.3.0 (2023-11-08)
+
+
+### Features
+
+* semi stable package ([b160102](https://github.com/TdTelegraf/tdtelegraf/commit/b160102ca3a0d53dd7510d30b92452cd049afe44))
+* update mocks path ([6b94723](https://github.com/TdTelegraf/tdtelegraf/commit/6b94723efdc650f71c668a3c9d076251b0c068f3))
+
+
+
+
+
 ## [0.2.1](https://github.com/TdTelegraf/tdtelegraf/compare/v0.2.0...v0.2.1) (2023-11-08)
 
 **Note:** Version bump only for package tdtelegraf
