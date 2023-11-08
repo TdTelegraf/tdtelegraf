@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.2.1](https://github.com/TdTelegraf/tdtelegraf/compare/v0.2.0...v0.2.1) (2023-11-08)
 
-**Note:** Version bump only for package tdtelefraf
+**Note:** Version bump only for package tdtelegraf
 
 
 

@@ -1,2 +1,2 @@
 // import './tdlib';
-import './tdtelefraf';
+import './tdtelegraf';
