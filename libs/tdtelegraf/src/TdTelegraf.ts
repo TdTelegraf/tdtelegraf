@@ -239,11 +239,12 @@ export class TdTelegraf extends Telegraf {
     await this.updateBotInfo();
     return res;
   }
-  async stop() {
-    this.tdlib.close();
+  async stop(signal?: string) {
+    this.log.debug('[stop]', signal);
+    this.tdlib.close(); // TODO: await?
     const onStop = this.tdlibProps?.onStop || function () {};
     // eslint-disable-next-line no-return-await
-    return await onStop.call(this);
+    return await onStop.call(this, signal);
   }
 }
 
