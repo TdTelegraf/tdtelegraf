@@ -226,7 +226,6 @@ export class TdTelegraf extends Telegraf {
           _: 'getMe',
         })
         .then((rawBotInfo) => {
-          console.log(rawBotInfo);
           // this._botInfo = convertBotInfo(raw);
           // @ts-ignore
           this.rawBotInfo = rawBotInfo;
