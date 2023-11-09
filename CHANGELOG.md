@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.5.0...v0.6.0) (2023-11-09)
+
+
+### Bug Fixes
+
+* mock sendChatAction ([727d8e6](https://github.com/TdTelegraf/tdtelegraf/commit/727d8e650b40f6fb6efbb67c94e53386fb25b131))
+
+
+### Features
+
+* improve onTestCommand ([bb54c6b](https://github.com/TdTelegraf/tdtelegraf/commit/bb54c6b4aa23bfaa84b1acc0c929e9534ecbafcc))
+
+
+
+
+
 # [0.5.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.4.0...v0.5.0) (2023-11-09)
 
 
