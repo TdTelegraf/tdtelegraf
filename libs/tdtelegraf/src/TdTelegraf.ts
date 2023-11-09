@@ -180,6 +180,12 @@ export class TdTelegraf extends Telegraf {
         // @ts-ignore
         this.telegram.callApi('sendMessage', { chat_id: chatId, text, ...extra });
 
+      ctx.telegram.sendChatAction = async (chatId, text, extra) => {
+        this.log.trace('TODO: [sendChatAction] -- realize me');
+        return true;
+      };
+      // this.telegram.callApi('sendChatAction', { chat_id: chatId, text, ...extra });
+
       // this.log.trace('[ctx]', ctx);
       // eslint-disable-next-line no-restricted-syntax
       for (const [cb] of this.useListeners) {
