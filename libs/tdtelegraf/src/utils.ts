@@ -79,7 +79,8 @@ export function convertToPhotoSize(item) {
 }
 
 export function convertBotInfo(rawBotInfo) {
-  const username = rawBotInfo.usernames.editable_username;
+  // TODO: юзернейма может не быть
+  const username = rawBotInfo?.usernames?.editable_username || '';
   return {
     id: rawBotInfo.id,
     is_bot: false,

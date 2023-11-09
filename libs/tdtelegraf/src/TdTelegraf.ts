@@ -217,20 +217,26 @@ export class TdTelegraf extends Telegraf {
   }
   async updateBotInfo() {
     // TODO: catch [f] { _: 'error', code: 401, message: 'Unauthorized' }
-    await this.tdlib
-      .invoke({
-        _: 'getMe',
-      })
-      .then((rawBotInfo) => {
-        // this._botInfo = convertBotInfo(raw);
-        // @ts-ignore
-        this.rawBotInfo = rawBotInfo;
-        // @ts-ignore
-        this.botInfo = convertBotInfo(rawBotInfo);
-      })
-      .catch((err) => {
-        this.log.error('TODO: [updateBotInfo]', err);
-      });
+    const authState = await this.tdlib.invoke({
+      _: 'getAuthorizationState',
+    });
+    if (authState._ === 'authorizationStateReady') {
+      await this.tdlib
+        .invoke({
+          _: 'getMe',
+        })
+        .then((rawBotInfo) => {
+          console.log(rawBotInfo);
+          // this._botInfo = convertBotInfo(raw);
+          // @ts-ignore
+          this.rawBotInfo = rawBotInfo;
+          // @ts-ignore
+          this.botInfo = convertBotInfo(rawBotInfo);
+        })
+        .catch((err) => {
+          this.log.error('TODO: [updateBotInfo]', err);
+        });
+    }
   }
   async launch() {
     const onLaunch = this.tdlibProps?.onLaunch || function () {};
