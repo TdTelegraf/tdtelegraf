@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.3.6...v0.4.0) (2023-11-09)
+
+
+### Features
+
+* export configure ([68921e0](https://github.com/TdTelegraf/tdtelegraf/commit/68921e060f5bea19c8ab7b3eefda1b2633dc8b44))
+* some changes ([20c68ea](https://github.com/TdTelegraf/tdtelegraf/commit/20c68ea1c15aafaa0854a41c26a12b17e79789fe))
+
+
+
+
+
 ## [0.3.6](https://github.com/TdTelegraf/tdtelegraf/compare/v0.3.0...v0.3.6) (2023-11-08)
 
 
