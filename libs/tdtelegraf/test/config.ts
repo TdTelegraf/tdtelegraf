@@ -1,7 +1,8 @@
 import { Err } from '@lskjs/err';
 import dotenv from 'dotenv';
 import { getTdjson } from 'prebuilt-tdlib';
-import { configure } from 'tdl';
+
+import { configure } from '../src/configure';
 
 dotenv.config({
   path: `${__dirname}/../../../.env`,
