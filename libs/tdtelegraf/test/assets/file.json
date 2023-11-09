@@ -1,0 +1,1 @@
+{"ok":true,"date":"2022-12-06T06:47:37.586Z","env":{"isServer":true,"isClient":false,"isDev":false,"isProd":true,"isDebug":false,"stage":"prod","version":"4be926be","instance":"1","isLeader":true},"debug":{},"data":{"nodejs":{"res":true,"timeout":0},"db":{"res":false,"timeout":0}}}

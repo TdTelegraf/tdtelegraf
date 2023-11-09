@@ -8,6 +8,7 @@ import { message } from 'telegraf/filters';
 import { TdTelegraf } from '../src/TdTelegraf';
 import { onChatIdCommand } from './commands/onChatIdCommand';
 import { onPingCommand } from './commands/onPingCommand';
+import { onTestCommand } from './commands/onTestCommand';
 import { botClientLoggerMiddleware, logOutcomingMessage, patchBotClient } from './commands/utils';
 import { accountPhone, databaseDirectory, debugChatId, filesDirectory, tdlOptions } from './config';
 
@@ -60,11 +61,9 @@ async function main() {
   bot.command('chatid', onChatIdCommand);
 
   // NOTE: custom example for debug TdTelegraf
-  bot.command('test', async (ctx) => {
-    await ctx.reply('Test start', { reply_to_message_id: ctx.message?.message_id });
-    await ctx.sendChatAction('typing');
-    await delay(3000);
-    await ctx.reply('Test finish');
+  bot.command('test', onTestCommand);
+  bot.catch((err) => {
+    log.error('bot.catch', err);
   });
 
   await bot.launch();
