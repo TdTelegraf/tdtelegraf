@@ -5,8 +5,8 @@
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
   "private": false,
   "scripts": {
-    "start": "        nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
     "dev": "          lsk run dev",
+    "debug": "        nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
     "build": "        lsk run build",
     "test": "         echo skip",
     "release": "      lsk run release"

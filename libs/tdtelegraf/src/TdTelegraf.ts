@@ -64,11 +64,14 @@ export class TdTelegraf extends Telegraf {
   tdlibProps: TdTelegrafOptions;
   tdlib: Client;
   log: Logger;
-  _botInfo: any;
+
+  // @ts-ignore
+  botInfo: any;
+  rawBotInfo: any;
   constructor(tdlibProps: TdTelegrafOptions) {
     super(null, {});
     this.tdlibProps = tdlibProps;
-    this.tdlibProps = tdlibProps;
+    // TODO: прокинуть явно, без всякой магии
     const accountId = tdlibProps.databaseDirectory.split('/').reverse()[1];
     this.convertToTelegrafMessage = convertToTelegrafMessage.bind(this);
 
@@ -131,9 +134,7 @@ export class TdTelegraf extends Telegraf {
       // @ts-ignore
       const ctx = new Context(update, {}, {});
       // @ts-ignore
-      ctx.botInfo = this._botInfo;
-      // @ts-ignore
-      this.botInfo = this._botInfo;
+      ctx.botInfo = this.botInfo;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       // @ts-ignore
       if (!ctx.tdl) ctx.tdl = {};
@@ -220,20 +221,23 @@ export class TdTelegraf extends Telegraf {
       .invoke({
         _: 'getMe',
       })
-      .then((raw) => {
-        this._botInfo = convertBotInfo(raw);
+      .then((rawBotInfo) => {
+        // this._botInfo = convertBotInfo(raw);
         // @ts-ignore
-        this.botInfo = convertBotInfo(raw);
+        this.rawBotInfo = rawBotInfo;
+        // @ts-ignore
+        this.botInfo = convertBotInfo(rawBotInfo);
       })
       .catch((err) => {
         this.log.error('TODO: [updateBotInfo]', err);
       });
   }
   async launch() {
-    await this.updateBotInfo();
     const onLaunch = this.tdlibProps?.onLaunch || function () {};
     // eslint-disable-next-line no-return-await
-    return await onLaunch.call(this);
+    const res = await onLaunch.call(this);
+    await this.updateBotInfo();
+    return res;
   }
   async stop() {
     this.tdlib.close();
@@ -242,3 +246,22 @@ export class TdTelegraf extends Telegraf {
     return await onStop.call(this);
   }
 }
+
+// TODO: сделать нормальный логин
+// export type LoginUser = {
+//   type: 'user',
+//   /** Handler for `authorizationStateWaitPhoneNumber`, will be recalled on error. */
+//   getPhoneNumber: (retry?: boolean) => Promise<string>,
+//   /** Handler for `authorizationStateWaitEmailAddress`, TDLib v1.8.6+ only. */
+//   getEmailAddress: () => Promise<string>,
+//   /** Handler for `authorizationStateWaitEmailCode`, TDLib v1.8.6+ only. */
+//   getEmailCode: () => Promise<string>,
+//   /** Handler for `authorizationStateWaitOtherDeviceConfirmation`, sends nothing. */
+//   confirmOnAnotherDevice: (link: string) => void,
+//   /** Handler for `authorizationStateWaitCode`, will be recalled on error. */
+//   getAuthCode: (retry?: boolean) => Promise<string>,
+//   /** Handler for `authorizationStateWaitPassword`, will be recalled on error. */
+//   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
+//   /** Handler for `authorizationStateWaitRegistration`. */
+//   getName: () => Promise<{ firstName: string, lastName?: string }>
+// }

@@ -4,7 +4,7 @@
   "description": "",
   "author": "isuvorov",
   "scripts": {
-    "start": "          pnpm -r run start",
+    "start": "          pnpm -r run debug",
     "dev": "            lsk run dev",
     "build": "          lsk run build",
     "test": "           echo ok",
