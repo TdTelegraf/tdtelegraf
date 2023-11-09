@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.4.0...v0.5.0) (2023-11-09)
+
+
+### Bug Fixes
+
+* check auth state in updateBotInfo ([f87f573](https://github.com/TdTelegraf/tdtelegraf/commit/f87f573ddb8f969cb8bdfc4a3a454bf0a3c2554f))
+* recursive stop ([862ca75](https://github.com/TdTelegraf/tdtelegraf/commit/862ca755d5d23f6fbaa8f960e8d25f50469aa17e))
+* remove log ([a01e3bb](https://github.com/TdTelegraf/tdtelegraf/commit/a01e3bba7b9a0caa8cdd93a167c714c78b1fd0be))
+
+
+### Features
+
+* add more debug features ([393223f](https://github.com/TdTelegraf/tdtelegraf/commit/393223f4e3672e9788439c35e68347238e951d16))
+
+
+
+
+
 # [0.4.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.3.6...v0.4.0) (2023-11-09)
 
 
