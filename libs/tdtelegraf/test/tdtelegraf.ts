@@ -22,7 +22,6 @@ async function main() {
     databaseDirectory,
     filesDirectory,
     async onStop() {
-      await this.stop();
       log.warn('client.stop');
     },
     async onLaunch() {
