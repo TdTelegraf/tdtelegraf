@@ -43,17 +43,28 @@ export async function callApi(name, props: any, clientOptions: any) {
         }
       : null,
   };
-  const wrapText = (rawText) =>
-    props.parse_mode
-      ? this.tdlib.execute({
-          _: 'parseTextEntities',
-          parse_mode: { _: 'textParseModeMarkdown' },
-          text: rawText,
-        })
-      : {
-          _: 'formattedText',
-          text: rawText,
-        };
+  const wrapText = (rawText) => {
+    if (['Markdown', 'MarkdownV2', 'HTML'].includes(props.parse_mode)) {
+      let version: number | undefined;
+      let _ = 'textParseModeHTML';
+      if (['Markdown', 'MarkdownV2'].includes(props.parse_mode)) {
+        _ = 'textParseModeMarkdown';
+        version = props.parse_mode === 'MarkdownV2' ? 1 : 0;
+      }
+      return this.tdlib.execute({
+        _: 'parseTextEntities',
+        parse_mode: {
+          _,
+          version,
+        },
+        text: rawText,
+      });
+    }
+    return {
+      _: 'formattedText',
+      text: rawText,
+    };
+  };
   if (name === 'sendChatAction') {
     this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
