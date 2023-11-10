@@ -9,7 +9,7 @@ import { Context, Telegraf } from 'telegraf';
 
 import { callApi } from './callApi';
 import { saveMock } from './debug';
-import { convertBotInfo, convertToTelegrafMessage } from './utils';
+import { convertBotInfo, convertToPhotoSize, convertToTelegrafMessage } from './utils';
 
 const ignoredActions = [
   'init',
@@ -152,8 +152,22 @@ export class TdTelegraf extends Telegraf {
         this.log.warn('[getChat] TODO: implement', chatId);
       };
       // @ts-ignore
-      ctx.tdl.getUserProfilePhotos = (props) => {
-        this.log.warn('[getUserProfilePhotos] TODO: implement', props);
+      ctx.tdl.getUserProfilePhotos = async (userId: number, offset: number, limit: number) => {
+        const response = await this.tdlib.invoke({
+          _: 'getUserProfilePhotos',
+          user_id: userId,
+          offset: offset || 0,
+          limit: limit || 100,
+        });
+
+        const photos = response.photos.map((ph: any) =>
+          ph.sizes.map((size: any) => convertToPhotoSize(size)),
+        );
+
+        return {
+          total_count: response.total_count,
+          photos,
+        };
       };
       // @ts-ignore
       ctx.tdl.getChatAdministrators = (props) => {
