@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.7.0...v0.8.0) (2023-11-10)
+
+
+### Bug Fixes
+
+* add support to Markdown, MarkdownV2 and HTML to wrapText ([7b86111](https://github.com/TdTelegraf/tdtelegraf/commit/7b86111248dcd76b33c06a85a58ee3a419bfd73d))
+
+
+### Features
+
+* sendPhoto ([c255bbe](https://github.com/TdTelegraf/tdtelegraf/commit/c255bbe3720c9a0f9495a8f19b8e2d5620553746))
+
+
+
+
+
 # [0.7.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.6.0...v0.7.0) (2023-11-10)
 
 
