@@ -194,8 +194,8 @@ export class TdTelegraf extends Telegraf {
         // @ts-ignore
         this.telegram.callApi('sendMessage', { chat_id: chatId, text, ...extra });
 
-      ctx.telegram.sendChatAction = async (chatId, text, extra) => {
-        this.log.trace('TODO: [sendChatAction] -- realize me');
+      ctx.telegram.sendChatAction = async (chatId, _action, extra) => {
+        this.telegram.callApi('sendChatAction', { chat_id: chatId, action: _action, ...extra });
         return true;
       };
       // this.telegram.callApi('sendChatAction', { chat_id: chatId, text, ...extra });

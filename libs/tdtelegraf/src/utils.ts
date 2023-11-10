@@ -64,6 +64,36 @@ export function convertToMessageEntity(item) {
   };
 }
 
+// maybe enum?
+export function convertBotChatActionToTDL(action: string) {
+  switch (action) {
+    case 'typing':
+      return 'chatActionTyping';
+    case 'upload_photo':
+      return 'chatActionUploadingPhoto';
+    case 'upload_video':
+      return 'chatActionUploadingVideo';
+    case 'record_video':
+      return 'chatActionRecordingVideo';
+    case 'upload_voice':
+      return 'chatActionUploadingVoiceNote';
+    case 'record_voice':
+      return 'chatActionRecordingVoiceNote';
+    case 'upload_document':
+      return 'chatActionUploadingDocument';
+    case 'choose_sticker':
+      return 'chatActionChoosingSticker';
+    case 'find_location':
+      return 'chatActionChoosingLocation';
+    case 'upload_video_note':
+      return 'chatActionUploadingVideoNote';
+    case 'record_video_note':
+      return 'chatActionRecordingVideoNote';
+    default:
+      return null;
+  }
+}
+
 export function convertToPhotoSize(item) {
   let key = 'photo';
   if (item._ === 'thumbnail') {

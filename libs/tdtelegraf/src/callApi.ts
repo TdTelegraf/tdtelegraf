@@ -5,6 +5,7 @@ import { map } from 'fishbird';
 import { mkdir, writeFile } from 'fs/promises';
 
 import { downloadFile } from './downloadFile';
+import { convertBotChatActionToTDL } from './utils';
 
 const saveMock = async (name, data) => {
   if (isDev) {
@@ -62,7 +63,7 @@ export async function callApi(name, props: any, clientOptions: any) {
       _: 'sendChatAction',
       chat_id: chatId,
       action: {
-        _: action === 'typing' ? 'chatActionTyping' : null,
+        _: convertBotChatActionToTDL(action),
       },
     };
     await saveMock(`${name}.tdlib.req.json`, data);
