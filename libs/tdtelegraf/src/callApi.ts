@@ -104,6 +104,36 @@ export async function callApi(name, props: any, clientOptions: any) {
     await saveMock(`${name}.callApi.res.json`, tres);
     return tres;
   }
+  if (name === 'sendPhoto') {
+    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    const chatId = props.chat_id;
+    const { photo, caption } = props;
+    if (!photo) throw new Err('!props.photo');
+    const messageContent = {} as any;
+    // TODO: check from buffer etc.
+    if (typeof photo === 'string' || typeof photo?.source === 'string') {
+      // TODO: rework
+      messageContent.photo = {
+        _: 'inputFileLocal',
+        path: photo?.source || photo,
+      };
+    }
+    if (typeof caption === 'string') {
+      messageContent.caption = wrapText(caption);
+    }
+    const data = omitNull({
+      _: 'sendMessage',
+      chat_id: chatId,
+      input_message_content: {
+        _: 'inputMessagePhoto',
+        ...messageContent,
+      },
+      ...extra,
+    });
+    const res = await this.tdlib.invoke(data);
+    const tres = transformRes(res);
+    return tres;
+  }
   if (name === 'sendVideo') {
     this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;

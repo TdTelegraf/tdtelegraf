@@ -198,6 +198,9 @@ export class TdTelegraf extends Telegraf {
         this.telegram.callApi('sendChatAction', { chat_id: chatId, action: _action, ...extra });
         return true;
       };
+      ctx.telegram.sendPhoto = (chatId, photo, extra) =>
+        // @ts-ignore
+        this.telegram.callApi('sendPhoto', { chat_id: chatId, photo, ...extra });
       // this.telegram.callApi('sendChatAction', { chat_id: chatId, text, ...extra });
 
       // this.log.trace('[ctx]', ctx);
