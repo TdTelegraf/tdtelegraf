@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.6.0...v0.7.0) (2023-11-10)
+
+
+### Features
+
+* getUserProfilePhotos ([194e9d6](https://github.com/TdTelegraf/tdtelegraf/commit/194e9d60cdb0540e11c1e62b91bee8cf93c389b2))
+* sendChatAction ([3330ffc](https://github.com/TdTelegraf/tdtelegraf/commit/3330ffc34faa75fca238246032811297f4aa92a5))
+
+
+
+
+
 # [0.6.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.5.0...v0.6.0) (2023-11-09)
 
 
