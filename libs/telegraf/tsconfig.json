@@ -1,4 +1,12 @@
 {
-  "extends": "@lskjs/tsconfig/strict/tsconfig.json"
+  "extends": "@lskjs/tsconfig/nostrict/tsconfig.json",
+  "compilerOptions": {
+    "strictPropertyInitialization": false,
+    "sourceMap": true,
+    "declaration": true,
+    "ignoreDeprecations": "5.0",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  }
 }
 
