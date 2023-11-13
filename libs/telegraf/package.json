@@ -14,7 +14,8 @@
   "dependencies": {
     "@lskjs/algos": "^3.17.0",
     "@lskjs/log": "^3.17.0",
-    "p-timeout": "^4.1.0"
+    "p-timeout": "^4.1.0",
+    "typegram": "^5.2.0"
   },
   "devDependencies": {
     "telegraf": "^4.12.2"
