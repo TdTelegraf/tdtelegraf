@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "@lskjs/algos": "^3.17.0",
-    "@lskjs/log": "^3.17.0"
+    "@lskjs/log": "^3.17.0",
+    "p-timeout": "^6.1.2"
   },
   "devDependencies": {
     "telegraf": "^4.12.2"

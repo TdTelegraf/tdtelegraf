@@ -1,7 +1,25 @@
 import { getEnvConfig, Logger } from '@lskjs/log';
+// import * as tg from '/core/types/typegram'
+import * as http from 'http';
+import pTimeout from 'p-timeout';
 import { Telegraf } from 'telegraf';
+import { Update } from 'telegraf/types';
 
+import { compactOptions } from './core/helpers/compact';
+import LskTelegram from './LskTelegram';
 import { waitFn } from './utils/utils';
+
+const DEFAULT_OPTIONS: Telegraf.Options<Context> = {
+  telegram: {},
+  handlerTimeout: 90_000, // 90s in ms
+  contextType: Context,
+};
+
+function always<T>(x: T) {
+  return () => x;
+}
+
+const anoop = always(Promise.resolve());
 
 const log = new Logger({
   ns: 'telegraf',
@@ -10,6 +28,23 @@ const log = new Logger({
 });
 
 export class LskTelegraf extends Telegraf {
+  /**
+   * NOTE: метод скопирован и заменен Telegram на LskTelegram
+   */
+  constructor(token: string, options?: Partial<Telegraf.Options<C>>) {
+    super(token, options); // TODO: подумать надо ли тут дергать super
+    // @ts-expect-error Trust me, TS
+    this.options = {
+      ...DEFAULT_OPTIONS,
+      ...compactOptions(options),
+    };
+    this.telegram = new LskTelegram(token, this.options.telegram);
+    log.debug('Created a `Telegraf` instance');
+  }
+
+  /**
+   * NOTE: метод скопирован и добавлен await для this.botInfo && this.polling?.abortController,
+   */
   async launch(config: Telegraf.LaunchOptions = {}) {
     log.debug('Connecting to Telegram');
     this.botInfo ??= await this.telegram.getMe();
@@ -73,6 +108,9 @@ export class LskTelegraf extends Telegraf {
     log.debug(`Bot started with webhook @ ${domainOpts.url}`);
   }
 
+  /**
+   * NOTE: метод скопирован и добавлен await для this.polling.abortController?.signal?.aborted
+   */
   async stop(reason = 'unspecified'): Promise<void> {
     log.trace('Stopping bot... Reason:', reason);
 
@@ -91,6 +129,30 @@ export class LskTelegraf extends Telegraf {
     if (this.webhookServer) {
       // @ts-ignore
       this.webhookServer?.close();
+    }
+  }
+
+  /**
+   * NOTE: метод скопирован и заменен Telegram на LskTelegram
+   */
+  async handleUpdate(update: Update, webhookResponse?: http.ServerResponse) {
+    this.botInfo ??=
+      (log.debug('Update %d is waiting for `botInfo` to be initialized', update.update_id),
+      await (this.botInfoCall ??= this.telegram.getMe()));
+    log.debug('Processing update', update.update_id);
+    const tg = new LskTelegram(this.token, this.telegram.options, webhookResponse);
+    const TelegrafContext = this.options.contextType;
+    const ctx = new TelegrafContext(update, tg, this.botInfo);
+    Object.assign(ctx, this.context);
+    try {
+      await pTimeout(Promise.resolve(this.middleware()(ctx, anoop)), this.options.handlerTimeout);
+    } catch (err) {
+      return await this.handleError(err, ctx);
+    } finally {
+      if (webhookResponse?.writableEnded === false) {
+        webhookResponse.end();
+      }
+      log.debug('Finished processing update', update.update_id);
     }
   }
 }
