@@ -2,7 +2,7 @@ import { getEnvConfig, Logger } from '@lskjs/log';
 // import * as tg from '/core/types/typegram'
 import * as http from 'http';
 import pTimeout from 'p-timeout';
-import { Telegraf } from 'telegraf';
+import { Context, Telegraf } from 'telegraf';
 import { Update } from 'telegraf/types';
 
 import { compactOptions } from './core/helpers/compact';
