@@ -1,40 +1,33 @@
 {
-  "name": "tdtelegraf",
-  "version": "0.8.0",
-  "description": "Crossover Tdlib with Telegraf framework – easy way to create Telegram bots with Telegram personal accounts",
+  "name": "@lskjs/telegraf",
+  "version": "3.17.0",
+  "description": "LSK.js – telegraf - wrapper for Telegraf/Telegram",
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
   "private": false,
   "scripts": {
     "dev": "            lsk run dev",
-    "debug": "          nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
-    "debug:telegraf": " nodemon --watch src --watch test --ext ts --exec \"ts-node test/telegraf.ts\"",
     "build": "          lsk run build",
-    "test": "           echo skip",
+    "test": "           lsk run test",
+    "prepack": "        lsk run prepack",
     "release": "        lsk run release"
-  }, 
+  },
   "dependencies": {
-    "@lskjs/algos": "^3.18.0",
-    "@lskjs/env": "^3.18.0",
-    "@lskjs/err": "^3.18.0",
-    "@lskjs/log": "^3.18.0",
-    "@lskjs/telegraf": "workspace:^",
-    "axios": "^1.6.0",
-    "fishbird": "^0.21.0",
-    "prebuilt-tdlib": "^0.1008019.0",
-    "tdl": "^7.4.0",
-    "tdl-tdlib-addon": "^1.2.2",
-    "telegraf": "^4.15.0"
+    "@lskjs/algos": "^3.17.0",
+    "@lskjs/log": "^3.17.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.7",
-    "@types/node": "^20.8.10",
-    "dotenv": "^16.3.1",
-    "source-map-support": "^0.5.21"
+    "telegraf": "^4.12.2"
   },
-  "//": "///////////========================/////////========================/////////========================/////////",
+  "peerDependencies": {
+    "telegraf": "^4.12.2"
+  },
+  "//": "///////////========================/////////========================/////////========================//////////",
   "prettier": "@lskjs/eslint-config/prettier",
   "eslintConfig": {
-    "extends": "@lskjs/eslint-config"
+    "extends": "@lskjs/eslint-config",
+    "rules": {
+      "import/named": "warn"
+    }
   },
   "jest": {
     "preset": "@lskjs/jest-config"
@@ -58,7 +51,16 @@
       "default": "./lib/*.js"
     }
   },
+  "size-limit": [
+    {
+      "path": "lib/index.js",
+      "limit": "10kb"
+    }
+  ],
   "///": "//////////========================/////////========================/////////========================/////////",
+  "repository": "https://github.com/lskjs/lskjs/tree/master//libs/telegraf",
+  "homepage": "https://github.com/lskjs/lskjs/tree/master//libs/telegraf",
+  "bugs": "https://github.com/lskjs/lskjs/issues",
   "license": "MIT",
   "publishConfig": {
     "access": "public",

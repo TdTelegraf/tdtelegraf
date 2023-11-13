@@ -5,6 +5,7 @@
   "author": "isuvorov",
   "scripts": {
     "start": "          pnpm -r run debug",
+    "start:telegraf": " pnpm -r run debug:telegraf",
     "dev": "            lsk run dev",
     "build": "          lsk run build",
     "test": "           echo ok",

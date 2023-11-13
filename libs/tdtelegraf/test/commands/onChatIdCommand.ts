@@ -14,7 +14,7 @@ export const getMessageTypes = (message) => {
 };
 
 export function getMessageType(message) {
-  console.log('getMessageType', message);
+  // console.log('getMessageType', message);
   // const { message } = ctx;
   if (message.audio) return 'audio';
   if (message.document) return 'document';
