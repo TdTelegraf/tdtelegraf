@@ -7,7 +7,10 @@ import { htmlExample, mdExample } from './examples';
 
 const wait = () => delay(2000);
 
+const startDate = new Date();
+
 export async function onTestCommand(ctx: Context<Update>) {
+  if (startDate > new Date(ctx.message.date * 1000)) return;
   await ctx.reply('Test start', { reply_to_message_id: ctx.message?.message_id });
 
   await wait();
