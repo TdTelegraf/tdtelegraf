@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { getEnvConfig, Logger } from '@lskjs/log';
-import { Telegram } from 'telegraf';
+import pTimeout from 'p-timeout';
+import { Context, Telegram } from 'telegraf';
 // import { Opts } from 'telegraf/types';
 import { Opts, Typegram } from 'typegram';
+
+import { LskTelegraf } from '.';
 
 // telegraf input file definition
 interface InputFileByPath {
@@ -41,7 +44,18 @@ export interface CallApiOptions {
   signal?: AbortSignal;
 }
 
+function always<T>(x: T) {
+  return () => x;
+}
+
+const anoop = always(Promise.resolve());
+
 export class LskTelegram extends Telegram {
+  telegraf: LskTelegraf;
+  constructor(telegraf, ...otherArgs: [any, any, any]) {
+    super(...otherArgs);
+    this.telegraf = telegraf;
+  }
   // @ts-ignore
   async callApi<M extends keyof TelegramType>(
     method: M,
@@ -50,9 +64,26 @@ export class LskTelegram extends Telegram {
   ): Promise<ReturnType<TelegramType[M]>> {
     log.trace('LskTelegram.callApi start', { method, payload, signal });
     // @ts-ignore
-    const res = await super.callApi<M>(method, payload, { signal });
+    const res: any = await super.callApi<M>(method, payload, { signal });
     //
-    log.trace('LskTelegram.callApi finish', { method, payload, signal });
+    log.trace('LskTelegram.callApi finish', { method, payload, signal, res });
+    if (method === 'sendMessage') {
+      const update: any = {
+        update_id: -1,
+        message: res,
+      };
+      // @ts-ignore
+      const ctx = new Context(update, this, this.telegraf.botInfo);
+      try {
+        // @ts-ignore
+        await pTimeout(Promise.resolve(this.telegraf.middlewareOut()(ctx, anoop)), 90000);
+      } catch (err) {
+        // @ts-ignore
+        return await this.telegraf.handleError(err, ctx);
+      } finally {
+        log.debug('Finished processing update', update.update_id);
+      }
+    }
 
     return res as ReturnType<TelegramType[M]>;
   }

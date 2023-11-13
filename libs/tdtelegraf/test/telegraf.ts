@@ -27,6 +27,10 @@ async function main() {
     // await saveOutcomingMessage(this, method, ctx, args, res);
   });
   bot.use(botClientLoggerMiddleware);
+  bot.useOut((ctx, next) => {
+    console.log('outgoing message', ctx.message);
+    return next();
+  });
   bot.command('ping', onPingCommand);
   bot.command('chatid', onChatIdCommand);
 

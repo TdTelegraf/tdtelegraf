@@ -3,11 +3,12 @@ import { getEnvConfig, Logger } from '@lskjs/log';
 // import * as tg from '/core/types/typegram'
 import * as http from 'http';
 import pTimeout from 'p-timeout';
-import { Context, Telegraf } from 'telegraf';
+import { Composer, Context, Telegraf } from 'telegraf';
 import { Update } from 'typegram';
 
 import { compactOptions } from './core/helpers/compact';
 import LskTelegram from './LskTelegram';
+import { Middleware, MiddlewareFn } from './types';
 import { waitFn } from './utils/utils';
 
 const DEFAULT_OPTIONS: Telegraf.Options<Context> = {
@@ -33,6 +34,8 @@ export class LskTelegraf extends Telegraf {
    * NOTE: метод скопирован и заменен Telegram на LskTelegram
    */
   // Partial<Telegraf.Options<C>
+  private handlerOut: MiddlewareFn<Context>;
+  public middlewareOut: () => MiddlewareFn<Context>;
   constructor(token: string, options?: any) {
     super(token, options); // TODO: подумать надо ли тут дергать super
     // @ts-expect-error Trust me, TS
@@ -41,9 +44,15 @@ export class LskTelegraf extends Telegraf {
       ...compactOptions(options),
     };
     // @ts-ignore
-    this.telegram = new LskTelegram(token, this.options.telegram);
+    this.telegram = new LskTelegram(this, token, this.options.telegram);
+    this.handlerOut = Composer.compose([]);
+    // поменять на метод в классе
+    this.middlewareOut = () => this.handlerOut;
     log.debug('Created a `Telegraf` instance');
   }
+  // middlewareOut() {
+  //   return this.handlerOut;
+  // }
 
   /**
    * NOTE: метод скопирован и добавлен await для this.botInfo && this.polling?.abortController,
@@ -146,7 +155,7 @@ export class LskTelegraf extends Telegraf {
       await (this.botInfoCall ??= this.telegram.getMe()));
     log.debug('Processing update', update.update_id);
     // @ts-ignore
-    const tg = new LskTelegram(this.token, this.telegram.options, webhookResponse);
+    const tg = new LskTelegram(this, this.token, this.telegram.options, webhookResponse);
     // @ts-ignore
     const TelegrafContext = this.options.contextType;
     const ctx = new TelegrafContext(update, tg, this.botInfo);
@@ -163,6 +172,10 @@ export class LskTelegraf extends Telegraf {
       }
       log.debug('Finished processing update', update.update_id);
     }
+  }
+  async useOut(...fns: ReadonlyArray<Middleware<Context>>) {
+    this.handlerOut = Composer.compose([this.handlerOut, ...fns]);
+    return this;
   }
 }
 

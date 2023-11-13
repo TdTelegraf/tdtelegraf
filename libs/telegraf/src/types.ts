@@ -1,4 +1,5 @@
 // import { Message as TelegrafMessage } from 'telegraf/types';
+import { Context } from 'telegraf';
 
 export type Message = any; // TelegrafMessage.CommonMessage;
 export type Ctx = any;
@@ -15,3 +16,14 @@ export type DbService = {
   upsertDialog: (filter: { botId: string; chatId: string }, $set: any) => Promise<any>;
   eventEmitter: any;
 };
+
+export type MiddlewareFn<C extends Context> = (
+  ctx: C,
+  next: () => Promise<void>,
+) => Promise<unknown> | void;
+
+export interface MiddlewareObj<C extends Context> {
+  middleware: () => MiddlewareFn<C>;
+}
+
+export type Middleware<C extends Context> = MiddlewareFn<C> | MiddlewareObj<C>;
