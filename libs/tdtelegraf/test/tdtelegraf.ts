@@ -56,6 +56,11 @@ async function main() {
     logOutcomingMessage(method, ctx, args, res);
     // await saveOutcomingMessage(this, method, ctx, args, res);
   });
+  const startDate = new Date();
+  bot.use((ctx, next) => {
+    if (startDate > new Date(ctx.message.date * 1000)) return false;
+    return next();
+  });
   bot.use(botClientLoggerMiddleware);
   bot.command('ping', onPingCommand);
   bot.command('chatid', onChatIdCommand);
