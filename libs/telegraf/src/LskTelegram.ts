@@ -2,8 +2,35 @@
 import { getEnvConfig, Logger } from '@lskjs/log';
 import { Telegram } from 'telegraf';
 // import { Opts } from 'telegraf/types';
-import { Opts, Telegram as TelegramType } from 'typegram';
+import { Opts, Typegram } from 'typegram';
 
+// telegraf input file definition
+interface InputFileByPath {
+  source: string;
+  filename?: string;
+}
+interface InputFileByReadableStream {
+  source: NodeJS.ReadableStream;
+  filename?: string;
+}
+interface InputFileByBuffer {
+  source: Buffer;
+  filename?: string;
+}
+interface InputFileByURL {
+  url: string;
+  filename?: string;
+}
+export type InputFile =
+  | InputFileByPath
+  | InputFileByReadableStream
+  | InputFileByBuffer
+  | InputFileByURL;
+
+// typegram proxy type setup
+type TelegrafTypegram = Typegram<InputFile>;
+
+export type TelegramType = TelegrafTypegram['Telegram'];
 const log = new Logger({
   ns: 'telegram',
   ...getEnvConfig(),
