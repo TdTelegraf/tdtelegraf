@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.18.0](https://github.com/lskjs/lskjs/compare/v0.8.0...v3.18.0) (2023-11-14)
+
+
+### Bug Fixes
+
+* downgrade typegram ([4f9d8eb](https://github.com/lskjs/lskjs/commit/4f9d8eb9aa00f8cead5404dfcb1b525eda26b3db))
+* test ([5bf8ed8](https://github.com/lskjs/lskjs/commit/5bf8ed810bdcc31bfc79c1b0f7b9f656f8fa7444))
+* types ([137953e](https://github.com/lskjs/lskjs/commit/137953eb7f062125f758bfaaa358208685beb042))
+* types may be ([8bc6e46](https://github.com/lskjs/lskjs/commit/8bc6e467fd4586ecb28c73df43506d671d0a1ed4))
+* useOut attempt ([34ebe7c](https://github.com/lskjs/lskjs/commit/34ebe7ca0e253b548405a00c4dc9023b38e2a9f3))
+
+
+### Features
+
+* add lsktelegraf ([0751af2](https://github.com/lskjs/lskjs/commit/0751af23cbdbaf30a34d80beee2ae9429c117c45))
+* add LskTelegram ([2c4adb2](https://github.com/lskjs/lskjs/commit/2c4adb2c7d4fccc9a272d016fc18599f31404555))
+* add new LskTelegram ([6771a00](https://github.com/lskjs/lskjs/commit/6771a006ae9e31613a2d7f9267cbc2dcdc2b8102))
+* downgrade for cjs ([ce21312](https://github.com/lskjs/lskjs/commit/ce21312c111364724386e81f937fa54e2e00d5d8))
+
+
+
+
+
 # [3.17.0](https://github.com/lskjs/lskjs/compare/v3.16.3...v3.17.0) (2023-11-06)
 
 **Note:** Version bump only for package @lskjs/telegraf

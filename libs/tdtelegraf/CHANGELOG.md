@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.18.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.8.0...v3.18.0) (2023-11-14)
+
+
+### Bug Fixes
+
+* check start date on test command ([b0d36d7](https://github.com/TdTelegraf/tdtelegraf/commit/b0d36d7fd3fe315b551195dce94997a753a1452a))
+* middleware for ignore test messages before launch ([cae56e3](https://github.com/TdTelegraf/tdtelegraf/commit/cae56e3958f343e0b404cfd74e47c97f1439cbc6))
+* useOut attempt ([34ebe7c](https://github.com/TdTelegraf/tdtelegraf/commit/34ebe7ca0e253b548405a00c4dc9023b38e2a9f3))
+
+
+### Features
+
+* add lsktelegraf ([0751af2](https://github.com/TdTelegraf/tdtelegraf/commit/0751af23cbdbaf30a34d80beee2ae9429c117c45))
+
+
+
+
+
 # [0.8.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.7.0...v0.8.0) (2023-11-10)
 
 
