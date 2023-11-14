@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.19.3](https://github.com/lskjs/lskjs/compare/v3.19.2...v3.19.3) (2023-11-14)
+
+
+### Bug Fixes
+
+* add mutedMethods ([850731c](https://github.com/lskjs/lskjs/commit/850731c7516e74fc4c976360f4949b44bf83d0b7))
+* useOut for tdl ([d1e5a1d](https://github.com/lskjs/lskjs/commit/d1e5a1dd65709ff1f060c8197a9f1cd3bc210957))
+
+
+
+
+
 ## [3.19.2](https://github.com/lskjs/lskjs/compare/v3.19.1...v3.19.2) (2023-11-14)
 
 

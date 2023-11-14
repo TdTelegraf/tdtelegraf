@@ -1,6 +1,6 @@
 {
   "name": "@lskjs/telegraf",
-  "version": "3.19.2",
+  "version": "3.19.3",
   "description": "LSK.js – telegraf - wrapper for Telegraf/Telegram",
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
   "private": false,

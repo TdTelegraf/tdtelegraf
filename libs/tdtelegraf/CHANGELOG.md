@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.19.3](https://github.com/TdTelegraf/tdtelegraf/compare/v3.19.2...v3.19.3) (2023-11-14)
+
+
+### Bug Fixes
+
+* useOut for tdl ([d1e5a1d](https://github.com/TdTelegraf/tdtelegraf/commit/d1e5a1dd65709ff1f060c8197a9f1cd3bc210957))
+
+
+
+
+
 ## [3.19.2](https://github.com/TdTelegraf/tdtelegraf/compare/v3.19.1...v3.19.2) (2023-11-14)
 
 **Note:** Version bump only for package tdtelegraf
