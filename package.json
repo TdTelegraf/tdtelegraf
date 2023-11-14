@@ -4,13 +4,14 @@
   "description": "",
   "author": "isuvorov",
   "scripts": {
-    "start": "          pnpm -r run debug",
-    "start:telegraf": " pnpm -r run debug:telegraf",
-    "dev": "            lsk run dev",
-    "build": "          lsk run build",
-    "test": "           echo ok",
-    "prepack": "        lsk run prepack",
-    "release": "        lsk run release"
+    "start": "            pnpm -r run debug",
+    "start:telegraf": "   pnpm -r run debug:telegraf",
+    "start:tdtelegraf": " pnpm -r run debug:tdtelegraf",
+    "dev": "              lsk run dev",
+    "build": "            lsk run build",
+    "test": "             echo ok",
+    "prepack": "          lsk run prepack",
+    "release": "          lsk run release"
   },
   "dependencies": {
     "axios": "^1.6.1",
