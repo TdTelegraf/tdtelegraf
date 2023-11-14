@@ -9,11 +9,11 @@ const log = createLogger({
 
 // eslint-disable-next-line no-shadow
 export const createSaveServiceMock = ({ log }): SaveService => ({
-  hasUser: async (filter) => {
+  hasUser: (filter) => {
     log.debug('hasUser', filter);
     return false;
   },
-  hasChat: async (filter) => {
+  hasChat: (filter) => {
     log.debug('hasChat', filter);
     return false;
   },

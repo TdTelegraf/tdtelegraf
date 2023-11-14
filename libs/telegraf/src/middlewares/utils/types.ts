@@ -1,8 +1,8 @@
 export interface SaveService {
-  hasUser: ({ botId, userId }: { botId: number; userId: number }) => Promise<boolean>;
+  hasUser: ({ botId, userId }: { botId: number; userId: number }) => boolean;
   upsertUser: ({ botId, userId }: { botId: number; userId: number }, data: any) => Promise<void>;
 
-  hasChat: ({ botId, chatId }: { botId: number; chatId: number }) => Promise<boolean>;
+  hasChat: ({ botId, chatId }: { botId: number; chatId: number }) => boolean;
   upsertChat: ({ botId, chatId }: { botId: number; chatId: number }, data: any) => Promise<void>;
 
   upsertMessage: (
