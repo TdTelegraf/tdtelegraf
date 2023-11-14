@@ -12,11 +12,11 @@ const mutedMethods = ['getMe', 'getUpdates', 'deleteWebhook'];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function loggerOutMiddleware(ctx, next) {
-  if (mutedMethods.includes(ctx?.callApiOptions?.method)) return;
+  if (mutedMethods.includes(ctx?.callApiOptions?.method)) return next();
   if (!ctx.botInfo) {
     globalLog.warn('!!!ctx.botInfo', ctx.botInfo);
     globalLog.warn('!!!ctx?', ctx);
-    return;
+    return next();
   }
   const log = getBotLogger(ctx.botInfo);
   const { method, payload, res, subRes } = ctx?.callApiOptions || {};
@@ -36,8 +36,7 @@ export async function loggerOutMiddleware(ctx, next) {
           );
         }),
     );
-    await next();
-    return;
+    return next();
   }
   const { action, user, chat, chatType } = getInfoFromCtx(ctx);
   const { text } = message;
@@ -56,5 +55,5 @@ export async function loggerOutMiddleware(ctx, next) {
     .join(' ');
   // console.log('messageType', messageType, str);
   log.debug(str);
-  await next();
+  return next();
 }

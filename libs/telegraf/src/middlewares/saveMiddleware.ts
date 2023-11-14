@@ -16,15 +16,15 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
     const messageId = message?.message_id;
     if (!botId) {
       globalLog.error('FIX: this !botId', message, ctx);
-      return;
+      return next();
     }
     if (!chatId) {
       globalLog.error('FIX: this !chatId', message, ctx);
-      return;
+      return next();
     }
     if (!messageId) {
       globalLog.error('FIX: this !messageId 22', message, ctx);
-      return;
+      return next();
     }
     if (userId && !service.hasUser({ botId, userId })) {
       // TODO: cache
@@ -106,7 +106,7 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
     }
     await Promise.all(promises);
     service.eventEmitter.emit('dialogUpdated', { botId, chatId, event: 'incomeMessage', $set });
-    await next();
+    return next();
   };
 
 export const saveMiddleware = createSaveMiddleware({ service: saveServiceMock });

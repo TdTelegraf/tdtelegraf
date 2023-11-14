@@ -9,11 +9,11 @@ const mutedMethods = ['getMe', 'getUpdates', 'deleteWebhook'];
 export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function saveOutMiddleware(ctx, next) {
-    if (mutedMethods.includes(ctx?.callApiOptions?.method)) return;
+    if (mutedMethods.includes(ctx?.callApiOptions?.method)) return next();
     if (!ctx.botInfo) {
       globalLog.warn('!!!ctx.botInfo', ctx.botInfo);
       globalLog.warn('!!!ctx?', ctx);
-      return;
+      return next();
     }
     const { method, payload, res, subRes } = ctx?.callApiOptions || {};
     const message = subRes || res;
@@ -31,8 +31,7 @@ export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =
             );
           }),
       );
-      await next();
-      return;
+      return next();
     }
     const botId = ctx?.botInfo?.id;
     const chatId = message?.chat?.id;
@@ -40,15 +39,15 @@ export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =
 
     if (!botId) {
       globalLog.error('FIX: this !botId', message, ctx);
-      return;
+      return next();
     }
     if (!chatId) {
       globalLog.error('FIX: this !chatId', message, ctx);
-      return;
+      return next();
     }
     if (!messageId) {
       globalLog.error('FIX: this !messageId 22', message, ctx);
-      return;
+      return next();
     }
     const $set = {
       botId,
@@ -62,7 +61,7 @@ export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =
       service.upsertDialog({ botId, chatId }, { lastMessage: message, updatedAt: new Date() }),
     ]);
     service.eventEmitter.emit('dialogUpdated', { botId, chatId, event: 'outcomeMessage', $set });
-    await next();
+    return next();
   };
 
 export const saveOutMiddleware = createSaveOutMiddleware({ service: saveServiceMock });
