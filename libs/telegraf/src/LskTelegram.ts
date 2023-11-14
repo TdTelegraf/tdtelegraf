@@ -78,7 +78,7 @@ export class LskTelegram extends Telegram {
         payload,
         res,
       };
-      return this.telegraf.handleUpdateOut(ctx);
+      await this.telegraf.handleUpdateOut(ctx);
     }
     if (isDebug) {
       // TODO: это делаем в будущем
@@ -95,7 +95,7 @@ export class LskTelegram extends Telegram {
           payload,
           res,
         };
-        return this.telegraf.handleUpdateOut(ctx);
+        await this.telegraf.handleUpdateOut(ctx);
       }
     }
 
