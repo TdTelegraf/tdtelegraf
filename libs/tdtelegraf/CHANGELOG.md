@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.19.0](https://github.com/TdTelegraf/tdtelegraf/compare/v3.18.1...v3.19.0) (2023-11-14)
+
+
+### Features
+
+* improve middlewares and commands ([a29fdc4](https://github.com/TdTelegraf/tdtelegraf/commit/a29fdc4ac24e32698d58281242d19943c9ae0e23))
+* update telegraf to lsktelegraf ([dc8a391](https://github.com/TdTelegraf/tdtelegraf/commit/dc8a391e424eebc73a6aa6a9989e8788bd2566b8))
+
+
+
+
+
 ## [3.18.1](https://github.com/TdTelegraf/tdtelegraf/compare/v3.18.0...v3.18.1) (2023-11-14)
 
 

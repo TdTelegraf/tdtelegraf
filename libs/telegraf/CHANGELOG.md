@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.19.0](https://github.com/lskjs/lskjs/compare/v3.18.1...v3.19.0) (2023-11-14)
+
+
+### Features
+
+* improve middlewares and commands ([a29fdc4](https://github.com/lskjs/lskjs/commit/a29fdc4ac24e32698d58281242d19943c9ae0e23))
+
+
+
+
+
 # [3.18.0](https://github.com/lskjs/lskjs/compare/v0.8.0...v3.18.0) (2023-11-14)
 
 
