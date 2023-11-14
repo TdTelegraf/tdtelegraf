@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { stage } from '@lskjs/env';
 import { getEnvConfig, Logger } from '@lskjs/log';
-import pTimeout from 'p-timeout';
 import { Context, Telegram } from 'telegraf';
 // import { Opts } from 'telegraf/types';
 import { Opts, Typegram } from 'typegram';
 
 import { LskTelegraf } from './LskTelegraf';
 
-const isDebug = stage === 'ga2mer';
+const isStable = stage !== 'ga2mer';
 // telegraf input file definition
 interface InputFileByPath {
   source: string;
@@ -64,7 +63,8 @@ export class LskTelegram extends Telegram {
     //
     log.trace('LskTelegram.callApi finish', { method, payload, signal, res });
 
-    if (!isDebug) {
+    if (isStable) {
+      // NOTE: КОД КОТОРЫЙ @isuvorov ИСПОЛЬЗУЕТ В ПРОДЕ ПРОСЬБА НЕ МЕНЯТЬ
       const update: any = {
         update_id: -1,
         message: res,
@@ -80,23 +80,25 @@ export class LskTelegram extends Telegram {
       };
       await this.telegraf.handleUpdateOut(ctx);
     }
-    if (isDebug) {
-      // TODO: это делаем в будущем
-      if (method === 'sendMessage') {
-        const update: any = {
-          update_id: -1,
-          message: res,
-        };
-        // @ts-ignore
-        const ctx = new Context(update, this, this.telegraf.botInfo);
-        // @ts-ignore
-        ctx.callApiOptions = {
-          method,
-          payload,
-          res,
-        };
-        await this.telegraf.handleUpdateOut(ctx);
-      }
+
+    // NOTE: НИЖЕ КОД КОТОРЫЙ ДЕЛАЕТ ТЕСТИРУЕТ НИКИТА
+    // NOTE: ДЛЯ СУПЕР БУДУЩЕГО
+
+    // TODO: это делаем в будущем
+    if (method === 'sendMessage') {
+      const update: any = {
+        update_id: -1,
+        message: res,
+      };
+      // @ts-ignore
+      const ctx = new Context(update, this, this.telegraf.botInfo);
+      // @ts-ignore
+      ctx.callApiOptions = {
+        method,
+        payload,
+        res,
+      };
+      await this.telegraf.handleUpdateOut(ctx);
     }
 
     return res as ReturnType<TelegramType[M]>;
