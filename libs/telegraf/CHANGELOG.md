@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.19.6](https://github.com/lskjs/lskjs/compare/v3.19.5...v3.19.6) (2023-11-14)
+
+
+### Bug Fixes
+
+* add comments ([9c8228f](https://github.com/lskjs/lskjs/commit/9c8228f01fa9940b636caecbcb2aa6e31ce38e2a))
+* await handleUpdateOut instead of return ([97f9690](https://github.com/lskjs/lskjs/commit/97f969051fe9c7ec405866a17601f38e23fbb15d))
+
+
+
+
+
 ## [3.19.5](https://github.com/lskjs/lskjs/compare/v3.19.4...v3.19.5) (2023-11-14)
 
 
