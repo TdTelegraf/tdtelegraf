@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.18.1](https://github.com/TdTelegraf/tdtelegraf/compare/v3.18.0...v3.18.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* update version ([a30d8e4](https://github.com/TdTelegraf/tdtelegraf/commit/a30d8e4e068478e4d1a1cfedaf2e307527988890))
+
+
+
+
+
 # [3.18.0](https://github.com/TdTelegraf/tdtelegraf/compare/v0.8.0...v3.18.0) (2023-11-14)
 
 
