@@ -134,10 +134,10 @@ export class TdTelegraf extends LskTelegraf {
 
       // const ContextType = this.options.contextType;
       // @ts-ignore
-      const ctx = new Context(update, {}, {});
+      const ctx = new Context(update, this.telegram, this.botInfo);
       (ctx as any).__tdl = 1;
       // @ts-ignore
-      ctx.botInfo = this.botInfo;
+      // ctx.botInfo = this.botInfo;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       // @ts-ignore
       if (!ctx.tdl) ctx.tdl = {};
@@ -182,39 +182,7 @@ export class TdTelegraf extends LskTelegraf {
         };
       };
       // @ts-ignore
-      ctx.tdl.getChatAdministrators = (props) => {
-        this.log.warn('[getChatAdministrators] TODO: implement', props);
-      };
-      // @ts-ignore
-      ctx.tdl.sendMessage = (props) => {
-        this.log.warn('[sendMessage] TODO: implement', props);
-      };
-      // @ts-ignore
-      ctx.tdl.sendDocument = (props) => {
-        this.log.warn('[sendDocument] TODO: implement', props);
-      };
-      // @ts-ignore
-      ctx.tdl.sendPhoto = (props) => {
-        this.log.warn('[sendPhoto] TODO: implement', props);
-      };
-      // @ts-ignore
-      ctx.tdl.sendMediaGroup = (props) => {
-        this.log.warn('[sendMediaGroup] TODO: implement', props);
-      };
-
-      ctx.telegram.sendMessage = (chatId, text, extra) =>
-        // @ts-ignore
-        this.telegram.callApi('sendMessage', { chat_id: chatId, text, ...extra });
-
-      ctx.telegram.sendChatAction = async (chatId, _action, extra) => {
-        // @ts-ignore
-        this.telegram.callApi('sendChatAction', { chat_id: chatId, action: _action, ...extra });
-        return true;
-      };
-      ctx.telegram.sendPhoto = (chatId, photo, extra) =>
-        // @ts-ignore
-        this.telegram.callApi('sendPhoto', { chat_id: chatId, photo, ...extra });
-      // this.telegram.callApi('sendChatAction', { chat_id: chatId, text, ...extra });
+      ctx.telegram.callApi = this.telegram.callApi;
 
       // this.log.trace('[ctx]', ctx);
       // eslint-disable-next-line no-restricted-syntax

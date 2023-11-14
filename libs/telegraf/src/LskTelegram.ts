@@ -46,12 +46,6 @@ export interface CallApiOptions {
   signal?: AbortSignal;
 }
 
-function always<T>(x: T) {
-  return () => x;
-}
-
-const anoop = always(Promise.resolve());
-
 export class LskTelegram extends Telegram {
   telegraf: LskTelegraf;
   constructor(telegraf, ...otherArgs: [any, any, any]) {

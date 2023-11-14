@@ -5,7 +5,7 @@ import { map } from 'fishbird';
 import { mkdir, writeFile } from 'fs/promises';
 
 import { downloadFile } from './downloadFile';
-import { convertBotChatActionToTDL } from './utils';
+import { convertBotChatActionToTDL, convertToPhotoSize } from './utils';
 
 const saveMock = async (name, data) => {
   if (isDev) {
@@ -65,6 +65,24 @@ export async function callApi(name, props: any, clientOptions: any) {
       text: rawText,
     };
   };
+  if (name === 'getUserProfilePhotos') {
+    const { user_id: userId, offset = 0, limit = 100 } = props;
+    const response = await this.tdlib.invoke({
+      _: 'getUserProfilePhotos',
+      user_id: userId,
+      offset,
+      limit,
+    });
+
+    const photos = response.photos.map((ph: any) =>
+      ph.sizes.map((size: any) => convertToPhotoSize(size)),
+    );
+
+    return {
+      total_count: response.total_count,
+      photos,
+    };
+  }
   if (name === 'sendChatAction') {
     this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
