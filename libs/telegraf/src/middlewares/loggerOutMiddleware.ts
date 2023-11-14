@@ -8,11 +8,12 @@ import { getInfoFromCtx } from './utils/getInfoFromCtx';
 
 const isDebug = stage === 'isuvorov';
 // async function saveOutMiddleware(ctx, next, { method, raw, args, res, i }) {
+const mutedMethods = ['getMe', 'getUpdates', 'deleteWebhook'];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function loggerOutMiddleware(ctx, next) {
+  if (mutedMethods.includes(ctx?.callApiOptions?.method)) return;
   if (!ctx.botInfo) {
-    if (ctx?.callApiOptions?.method === 'getMe') return;
     globalLog.warn('!!!ctx.botInfo', ctx.botInfo);
     globalLog.warn('!!!ctx?', ctx);
     return;
@@ -38,7 +39,6 @@ export async function loggerOutMiddleware(ctx, next) {
     await next();
     return;
   }
-
   const { action, user, chat, chatType } = getInfoFromCtx(ctx);
   const { text } = message;
   const userOrUserId = user; // || args[0];

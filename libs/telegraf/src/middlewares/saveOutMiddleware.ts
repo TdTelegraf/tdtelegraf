@@ -4,11 +4,13 @@ import { map } from 'fishbird';
 import { saveServiceMock } from './utils/saveServiceMock';
 import { SaveService } from './utils/types';
 
+const mutedMethods = ['getMe', 'getUpdates', 'deleteWebhook'];
+
 export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function saveOutMiddleware(ctx, next) {
+    if (mutedMethods.includes(ctx?.callApiOptions?.method)) return;
     if (!ctx.botInfo) {
-      if (ctx?.callApiOptions?.method === 'getMe') return;
       globalLog.warn('!!!ctx.botInfo', ctx.botInfo);
       globalLog.warn('!!!ctx?', ctx);
       return;
