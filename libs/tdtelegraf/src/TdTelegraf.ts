@@ -4,8 +4,9 @@ import { mkdirSync } from 'node:fs';
 
 import { omit } from '@lskjs/algos';
 import { Logger } from '@lskjs/log';
+import { LskTelegraf } from '@lskjs/telegraf';
 import { Client, ClientOptions, createClient } from 'tdl';
-import { Context, Telegraf } from 'telegraf';
+import { Context } from 'telegraf';
 
 import { callApi } from './callApi';
 import { saveMock } from './debug';
@@ -55,7 +56,7 @@ interface TdTelegrafOptions extends ClientOptions {
   onStop?: () => void;
 }
 
-export class TdTelegraf extends Telegraf {
+export class TdTelegraf extends LskTelegraf {
   onListeners = new Set<any[]>();
   useListeners = new Set<any[]>();
   commandListeners = new Set<any[]>();
