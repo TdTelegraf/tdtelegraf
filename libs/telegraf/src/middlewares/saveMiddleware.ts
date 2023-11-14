@@ -29,19 +29,19 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
     if (userId && !service.hasUser({ botId, userId })) {
       // TODO: cache
       // && !(await TelegramUserModel.findOne({ botId, userId }))) {
-      const info = await ctx.tdl.getChat(userId);
-      const photos = await ctx.tdl.getUserProfilePhotos(userId);
+      const info = await ctx.telegram.getChat(userId);
+      const photos = await ctx.telegram.getUserProfilePhotos(userId);
       const $set = { ...user, info, photos };
       // console.log('[user]', $set);
       promises.push(service.upsertUser({ botId, userId }, $set));
     }
     if (chatId && !service.hasChat({ botId, chatId })) {
       // && !(await TelegramChatModel.findOne({ botId, chatId }))) {
-      const info = await ctx.tdl.getChat(chatId);
+      const info = await ctx.telegram.getChat(chatId);
       let administrators;
       let memberCount;
       if (chat.type !== 'private') {
-        administrators = await ctx.tdl.getChatAdministrators(chatId);
+        administrators = await ctx.telegram.getChatAdministrators(chatId);
         // console.log('ctx.tdl, ', ctx.tdl);
         // memberCount = await ctx.tdl.getChatMemberCount(chatId);
       }
