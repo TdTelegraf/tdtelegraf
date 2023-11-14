@@ -123,7 +123,7 @@ export class TdTelegraf extends LskTelegraf {
     }
 
     // console.log(msg._ === 'updateNewMessage', msg._);
-    if (msg._ === 'updateNewMessage' && !msg.message.is_outgoing) {
+    if (msg._ === 'updateNewMessage') {
       // console.log(JSON.stringify(msg, 0, 2));
       const { message } = msg;
       const newMessage = await this.convertToTelegrafMessage(message);
@@ -135,11 +135,21 @@ export class TdTelegraf extends LskTelegraf {
       // const ContextType = this.options.contextType;
       // @ts-ignore
       const ctx = new Context(update, {}, {});
+      (ctx as any).__tdl = 1;
       // @ts-ignore
       ctx.botInfo = this.botInfo;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       // @ts-ignore
       if (!ctx.tdl) ctx.tdl = {};
+      if (msg.message.is_outgoing) {
+        (ctx as any).callApiOptions = {
+          method: msg._,
+          payload: null,
+          res: update.message,
+        };
+        (this as any).handleUpdateOut(ctx);
+        return;
+      }
       // @ts-ignore
       ctx.tdl.getChat = (chatId) => {
         // const user = await this.tdlib.invoke({

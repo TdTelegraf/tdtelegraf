@@ -157,6 +157,11 @@ export class LskTelegraf extends Telegraf {
       this.webhookServer?.close();
     }
   }
+  async useOut(...fns: ReadonlyArray<MiddlewareFn<Context>>) {
+    // @ts-ignore
+    this.handlerOut = Composer.compose([this.handlerOut, ...fns]);
+    return this;
+  }
 
   /**
    * NOTE: метод скопирован и заменен Telegram на LskTelegram
@@ -187,10 +192,17 @@ export class LskTelegraf extends Telegraf {
       log.debug('Finished processing update', update.update_id);
     }
   }
-  async useOut(...fns: ReadonlyArray<MiddlewareFn<Context>>) {
-    // @ts-ignore
-    this.handlerOut = Composer.compose([this.handlerOut, ...fns]);
-    return this;
+  async handleUpdateOut(ctx: Context) {
+    log.debug('Processing out update', ctx.update.update_id);
+    try {
+      // @ts-ignore
+      await pTimeout(Promise.resolve(this.middlewareOut()(ctx, anoop)), 90000);
+    } catch (err) {
+      // @ts-ignore
+      return await this.handleError(err, ctx);
+    } finally {
+      log.debug('Finished processing out update', ctx.update.update_id);
+    }
   }
 }
 

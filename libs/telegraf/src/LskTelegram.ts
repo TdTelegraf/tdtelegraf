@@ -84,16 +84,9 @@ export class LskTelegram extends Telegram {
         payload,
         res,
       };
-      try {
-        // @ts-ignore
-        await pTimeout(Promise.resolve(this.telegraf.middlewareOut()(ctx, anoop)), 90000);
-      } catch (err) {
-        // @ts-ignore
-        return await this.telegraf.handleError(err, ctx);
-      } finally {
-        log.debug('Finished processing update', update.update_id);
-      }
-    } else if (isDebug) {
+      return this.telegraf.handleUpdateOut(ctx);
+    }
+    if (isDebug) {
       // TODO: это делаем в будущем
       if (method === 'sendMessage') {
         const update: any = {
@@ -102,15 +95,13 @@ export class LskTelegram extends Telegram {
         };
         // @ts-ignore
         const ctx = new Context(update, this, this.telegraf.botInfo);
-        try {
-          // @ts-ignore
-          await pTimeout(Promise.resolve(this.telegraf.middlewareOut()(ctx, anoop)), 90000);
-        } catch (err) {
-          // @ts-ignore
-          return await this.telegraf.handleError(err, ctx);
-        } finally {
-          log.debug('Finished processing update', update.update_id);
-        }
+        // @ts-ignore
+        ctx.callApiOptions = {
+          method,
+          payload,
+          res,
+        };
+        return this.telegraf.handleUpdateOut(ctx);
       }
     }
 
