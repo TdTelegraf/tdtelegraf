@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.19.1](https://github.com/TdTelegraf/tdtelegraf/compare/v3.19.0...v3.19.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* semi stable ([ca7f1d2](https://github.com/TdTelegraf/tdtelegraf/commit/ca7f1d2c94e648456d102a7c74a845eba2a21e1e))
+
+
+
+
+
 # [3.19.0](https://github.com/TdTelegraf/tdtelegraf/compare/v3.18.1...v3.19.0) (2023-11-14)
 
 
