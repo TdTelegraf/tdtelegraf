@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.19.4](https://github.com/TdTelegraf/tdtelegraf/compare/v3.19.3...v3.19.4) (2023-11-14)
+
+
+### Bug Fixes
+
+* move td calls to single callApi ([52fef5a](https://github.com/TdTelegraf/tdtelegraf/commit/52fef5a60416a094e8c70c61714b5a92011c82c6))
+
+
+
+
+
 ## [3.19.3](https://github.com/TdTelegraf/tdtelegraf/compare/v3.19.2...v3.19.3) (2023-11-14)
 
 
