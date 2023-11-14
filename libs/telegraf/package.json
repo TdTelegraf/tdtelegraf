@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@lskjs/algos": "^3.17.0",
+    "@lskjs/env": "^3.18.0",
     "@lskjs/log": "^3.17.0",
+    "fishbird": "^0.21.0",
     "p-timeout": "^4.1.0",
     "typegram": "^4.3.0"
   },
@@ -51,6 +53,26 @@
       "import": "./lib/*.mjs",
       "types": "./lib/*.d.ts",
       "default": "./lib/*.js"
+    },
+    "./middlewares": {
+      "import": "./lib/middlewares/index.mjs",
+      "types": "./lib/middlewares/index.d.ts",
+      "default": "./lib/middlewares/index.js"
+    },
+    "./middlewares/*": {
+      "import": "./lib/middlewares/*.mjs",
+      "types": "./lib/middlewares/*.d.ts",
+      "default": "./lib/middlewares/*.js"
+    },
+    "./commands": {
+      "import": "./lib/commands/index.mjs",
+      "types": "./lib/commands/index.d.ts",
+      "default": "./lib/commands/index.js"
+    },
+    "./commands/*": {
+      "import": "./lib/commands/*.mjs",
+      "types": "./lib/commands/*.d.ts",
+      "default": "./lib/commands/*.js"
     }
   },
   "size-limit": [

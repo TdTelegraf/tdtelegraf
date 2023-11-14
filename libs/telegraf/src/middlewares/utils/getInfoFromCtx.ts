@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 
-import { getMessageType } from '../helpers/telegramHelpers';
+import { getMessageType } from '../../commands/onChatIdCommand';
+import { getBotLogger } from './getBotLogger';
 
-export const getMessageInfo = (ctx: any) => {
+export const getInfoFromCtx = (ctx) => {
   const { botInfo } = ctx;
 
   const message = ctx?.update?.message;
@@ -11,6 +12,8 @@ export const getMessageInfo = (ctx: any) => {
 
   const from = message?.from || callback_query?.from || my_chat_member?.from;
   const chat = message?.chat || callback_query?.chat || my_chat_member?.chat;
+
+  const log = getBotLogger(botInfo);
 
   const chatType = chat?.type || chat?.message?.type;
 
@@ -25,6 +28,7 @@ export const getMessageInfo = (ctx: any) => {
   const text = message?.text || callback_query?.data || '';
   const messageType = getMessageType(message || {});
   return {
+    log,
     user: from?.username || from?.id,
     chatType,
     chat: chat?.username || chat?.title || chat?.id,

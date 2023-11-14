@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-namespace */
+import { stage } from '@lskjs/env';
 import { getEnvConfig, Logger } from '@lskjs/log';
 import pTimeout from 'p-timeout';
 import { Context, Telegram } from 'telegraf';
 // import { Opts } from 'telegraf/types';
 import { Opts, Typegram } from 'typegram';
 
-import { LskTelegraf } from '.';
+import { LskTelegraf } from './LskTelegraf';
 
+const isDebug = stage === 'ga2mer';
 // telegraf input file definition
 interface InputFileByPath {
   source: string;
@@ -67,13 +69,21 @@ export class LskTelegram extends Telegram {
     const res: any = await super.callApi<M>(method, payload, { signal });
     //
     log.trace('LskTelegram.callApi finish', { method, payload, signal, res });
-    if (method === 'sendMessage') {
+
+    if (!isDebug) {
       const update: any = {
         update_id: -1,
         message: res,
       };
+
       // @ts-ignore
       const ctx = new Context(update, this, this.telegraf.botInfo);
+      // @ts-ignore
+      ctx.callApiOptions = {
+        method,
+        payload,
+        res,
+      };
       try {
         // @ts-ignore
         await pTimeout(Promise.resolve(this.telegraf.middlewareOut()(ctx, anoop)), 90000);
@@ -82,6 +92,25 @@ export class LskTelegram extends Telegram {
         return await this.telegraf.handleError(err, ctx);
       } finally {
         log.debug('Finished processing update', update.update_id);
+      }
+    } else if (isDebug) {
+      // TODO: это делаем в будущем
+      if (method === 'sendMessage') {
+        const update: any = {
+          update_id: -1,
+          message: res,
+        };
+        // @ts-ignore
+        const ctx = new Context(update, this, this.telegraf.botInfo);
+        try {
+          // @ts-ignore
+          await pTimeout(Promise.resolve(this.telegraf.middlewareOut()(ctx, anoop)), 90000);
+        } catch (err) {
+          // @ts-ignore
+          return await this.telegraf.handleError(err, ctx);
+        } finally {
+          log.debug('Finished processing update', update.update_id);
+        }
       }
     }
 

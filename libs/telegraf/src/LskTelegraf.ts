@@ -8,8 +8,22 @@ import { Update } from 'typegram';
 
 import { compactOptions } from './core/helpers/compact';
 import LskTelegram from './LskTelegram';
-import { Middleware, MiddlewareFn } from './types';
+import { MiddlewareFn } from './types';
 import { waitFn } from './utils/utils';
+
+// export type OutMiddlewareOptions = {
+//   method: string;
+//   payload: any;
+//   res: any;
+//   subRes?: any;
+//   i?: number;
+// };
+
+// export type OutMiddlewareFn<C extends Context> = (
+//   ctx: C,
+//   next: () => Promise<void>,
+//   options: OutMiddlewareOptions,
+// ) => Promise<unknown> | void;
 
 const DEFAULT_OPTIONS: Telegraf.Options<Context> = {
   telegram: {},
@@ -173,7 +187,8 @@ export class LskTelegraf extends Telegraf {
       log.debug('Finished processing update', update.update_id);
     }
   }
-  async useOut(...fns: ReadonlyArray<Middleware<Context>>) {
+  async useOut(...fns: ReadonlyArray<MiddlewareFn<Context>>) {
+    // @ts-ignore
     this.handlerOut = Composer.compose([this.handlerOut, ...fns]);
     return this;
   }
