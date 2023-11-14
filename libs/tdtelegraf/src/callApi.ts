@@ -66,7 +66,7 @@ export async function callApi(name, props: any, clientOptions: any) {
     };
   };
   if (name === 'sendChatAction') {
-    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
     const { action } = props;
 
@@ -80,11 +80,11 @@ export async function callApi(name, props: any, clientOptions: any) {
     await saveMock(`${name}.tdlib.req.json`, data);
     const res = await this.tdlib.invoke(data);
     await saveMock(`${name}.tdlib.res.json`, res);
-    // this.log.debug('[callApi]', `[${name}] res`, res);
+    // this.log.trace('[callApi]', `[${name}] res`, res);
     return res;
   }
   if (name === 'sendMessage') {
-    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
     const { text } = props;
 
@@ -105,7 +105,7 @@ export async function callApi(name, props: any, clientOptions: any) {
     return tres;
   }
   if (name === 'sendPhoto') {
-    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
     const { photo, caption } = props;
     if (!photo) throw new Err('!props.photo');
@@ -135,7 +135,7 @@ export async function callApi(name, props: any, clientOptions: any) {
     return tres;
   }
   if (name === 'sendVideo') {
-    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
     if (!props.video?.url) throw new Err('!props.video?.url');
     const filePath = await downloadFile(props.video?.url, '/tmp');
@@ -160,7 +160,7 @@ export async function callApi(name, props: any, clientOptions: any) {
     return tres;
   }
   if (name === 'sendAudio') {
-    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
     if (!props.audio?.url) throw new Err('!props.audio?.url');
     const filePath = await downloadFile(props.audio?.url, '/tmp');
@@ -185,7 +185,7 @@ export async function callApi(name, props: any, clientOptions: any) {
     return tres;
   }
   if (name === 'sendVoice') {
-    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
     if (!props.voice?.url) throw new Err('!props.voice?.url');
     const filePath = await downloadFile(props.voice?.url, '/tmp');
@@ -210,7 +210,7 @@ export async function callApi(name, props: any, clientOptions: any) {
     return tres;
   }
   if (name === 'sendVideoNote') {
-    this.log.debug('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     const chatId = props.chat_id;
     if (!props.video_note?.url) throw new Err('!props.video_note?.url');
     const filePath = await downloadFile(props.video_note?.url, '/tmp');
@@ -235,7 +235,7 @@ export async function callApi(name, props: any, clientOptions: any) {
     return tres;
   }
   if (name === 'sendMediaGroup') {
-    this.log.debug('[callApi]', `[${name}]`, props, props?.media, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, props?.media, clientOptions);
     const chatId = props.chat_id;
     const data = {
       _: 'sendMessageAlbum',

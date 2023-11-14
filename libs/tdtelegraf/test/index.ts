@@ -1,3 +1,3 @@
 // import './tdlib';
-// import './telegraf';
+import './telegraf';
 import './tdtelegraf';

@@ -7,6 +7,8 @@ import {
   ignoreMiddleware,
   loggerMiddleware,
   loggerOutMiddleware,
+  saveMiddleware,
+  saveOutMiddleware,
 } from '@lskjs/telegraf/middlewares';
 import { message } from 'telegraf/filters';
 
@@ -25,11 +27,11 @@ async function main() {
 
   // // NOTE: Default rxample from @lskjs/telegraf tutorial
   bot.useOut(loggerOutMiddleware);
-  // bot.useOut(saveOutMiddleware);
+  bot.useOut(saveOutMiddleware);
 
   bot.use(loggerMiddleware);
+  bot.use(saveMiddleware);
   bot.use(ignoreMiddleware);
-  // bot.use(saveMiddleware);
   bot.command('ping', onPingCommand);
   bot.command('chatid', onChatIdCommand);
 

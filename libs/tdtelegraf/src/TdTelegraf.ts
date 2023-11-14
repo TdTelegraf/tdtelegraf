@@ -47,6 +47,7 @@ const ignoredActions = [
   'updateMessageContent',
   'updateFile',
   'updateUnconfirmedSession',
+  'updateBasicGroup',
 ];
 
 interface TdTelegrafOptions extends ClientOptions {
@@ -76,7 +77,7 @@ export class TdTelegraf extends LskTelegraf {
     const accountId = tdlibProps.databaseDirectory.split('/').reverse()[1];
     this.convertToTelegrafMessage = convertToTelegrafMessage.bind(this);
 
-    this.log = new Logger({ ns: 'tdl', name: accountId });
+    this.log = new Logger({ ns: 'tdl', name: accountId, level: 'debug' });
     this.tdlib = this.createClient(this.tdlibProps);
     // @ts-ignore
     this.telegram.callApi = callApi.bind(this);
@@ -196,6 +197,7 @@ export class TdTelegraf extends LskTelegraf {
         this.telegram.callApi('sendMessage', { chat_id: chatId, text, ...extra });
 
       ctx.telegram.sendChatAction = async (chatId, _action, extra) => {
+        // @ts-ignore
         this.telegram.callApi('sendChatAction', { chat_id: chatId, action: _action, ...extra });
         return true;
       };

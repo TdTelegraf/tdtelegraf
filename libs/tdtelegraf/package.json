@@ -5,12 +5,13 @@
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
   "private": false,
   "scripts": {
-    "dev": "            lsk run dev",
-    "debug": "          nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
-    "debug:telegraf": " nodemon --watch src --watch test --ext ts --exec \"ts-node test/telegraf.ts\"",
-    "build": "          lsk run build",
-    "test": "           echo skip",
-    "release": "        lsk run release"
+    "dev": "              lsk run dev",
+    "debug": "            nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
+    "debug:telegraf": "   nodemon --watch src --watch test --ext ts --exec \"ts-node test/telegraf.ts\"",
+    "debug:tdtelegraf": " nodemon --watch src --watch test --ext ts --exec \"ts-node test/tdtelegraf.ts\"",
+    "build": "            lsk run build",
+    "test": "             echo skip",
+    "release": "          lsk run release"
   },
   "dependencies": {
     "@lskjs/algos": "^3.18.0",

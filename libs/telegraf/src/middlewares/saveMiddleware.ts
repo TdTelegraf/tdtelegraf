@@ -1,14 +1,31 @@
+import { log as globalLog } from '@lskjs/log/log';
+
 import { getBotLogger } from './utils/getBotLogger';
 import { saveServiceMock } from './utils/saveServiceMock';
 import { SaveService } from './utils/types';
 
 export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
-  async function saveMiddleware(ctx) {
+  async function saveMiddleware(ctx, next) {
     const promises = [];
     const { message } = ctx;
-    const botId = ctx.botInfo.id;
+    const botId = ctx.botInfo?.id;
     const user = message?.from;
     const userId = user?.id;
+    const chat = message?.chat;
+    const chatId = chat?.id;
+    const messageId = message?.message_id;
+    if (!botId) {
+      globalLog.error('FIX: this !botId', message, ctx);
+      return;
+    }
+    if (!chatId) {
+      globalLog.error('FIX: this !chatId', message, ctx);
+      return;
+    }
+    if (!messageId) {
+      globalLog.error('FIX: this !messageId 22', message, ctx);
+      return;
+    }
     if (userId && !service.hasUser({ botId, userId })) {
       // TODO: cache
       // && !(await TelegramUserModel.findOne({ botId, userId }))) {
@@ -18,8 +35,6 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
       // console.log('[user]', $set);
       promises.push(service.upsertUser({ botId, userId }, $set));
     }
-    const chat = message?.chat;
-    const chatId = chat?.id;
     if (chatId && !service.hasChat({ botId, chatId })) {
       // && !(await TelegramChatModel.findOne({ botId, chatId }))) {
       const info = await ctx.tdl.getChat(chatId);
@@ -45,7 +60,6 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
       }
       promises.push(service.upsertChat({ botId, chatId }, $set));
     }
-    const messageId = message?.message_id;
     let $set;
     if (messageId) {
       $set = {
@@ -92,6 +106,7 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
     }
     await Promise.all(promises);
     service.eventEmitter.emit('dialogUpdated', { botId, chatId, event: 'incomeMessage', $set });
+    await next();
   };
 
 export const saveMiddleware = createSaveMiddleware({ service: saveServiceMock });

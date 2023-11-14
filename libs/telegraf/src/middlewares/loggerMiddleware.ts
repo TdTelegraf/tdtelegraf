@@ -1,8 +1,10 @@
+import { getBotLogger } from './utils/getBotLogger';
 import { getInfoFromCtx } from './utils/getInfoFromCtx';
 
 export const loggerMiddleware = (ctx, next) => {
-  const { log, user, chat, chatType, action, text, messageType } = getInfoFromCtx(ctx);
-  log.trace(
+  const log = getBotLogger(ctx.botInfo);
+  const { user, chat, chatType, action, text, messageType } = getInfoFromCtx(ctx);
+  log.debug(
     [
       '=>',
       action !== 'message' ? `${action} ` : '',
