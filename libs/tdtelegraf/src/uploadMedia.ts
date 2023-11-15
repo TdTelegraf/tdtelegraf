@@ -1,6 +1,7 @@
-import { log } from '@lskjs/log/log';
 import fs from 'fs/promises';
 import path from 'path';
+
+import { downloadFile } from './downloadFile';
 
 // Function to generate a random filename
 function generateRandomFilename() {
@@ -9,10 +10,16 @@ function generateRandomFilename() {
   return `${timestamp}-${randomString}`;
 }
 
+const isUrl = (str) => str.startsWith('http://') || str.startsWith('https://');
+
 export const uploadMedia = async (media, directoryPath = '/tmp') => {
   if (!media) return null; // error maybe?
   const mediaItem = media?.source || media;
   if (typeof mediaItem === 'string') {
+    if (isUrl(mediaItem)) {
+      const filePath = await downloadFile(mediaItem, directoryPath);
+      return filePath;
+    }
     // TODO: check for url;
     return mediaItem;
   }
