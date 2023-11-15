@@ -1,4 +1,6 @@
-import fs from 'fs/promises';
+import { createWriteStream } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+
 import path from 'path';
 
 import { downloadFile } from './downloadFile';
@@ -10,24 +12,35 @@ function generateRandomFilename() {
   return `${timestamp}-${randomString}`;
 }
 
-const isUrl = (str) => str.startsWith('http://') || str.startsWith('https://');
+const isUrl = (str) =>
+  typeof str === 'string' && (str.startsWith('http://') || str.startsWith('https://'));
 
 export const uploadMedia = async (media, directoryPath = '/tmp') => {
-  if (!media) return null; // error maybe?
+  if (!media) return null; // TODO: think about error maybe?
   const mediaItem = media?.source || media;
+  // console.log('[uploadMedia]', { mediaItem }, isUrl(mediaItem));
   if (typeof mediaItem === 'string') {
     if (isUrl(mediaItem)) {
       const filePath = await downloadFile(mediaItem, directoryPath);
+      // console.log({ filePath });
       return filePath;
     }
-    // TODO: check for url;
     return mediaItem;
   }
+  const filename = generateRandomFilename();
+  const filePath = path.join(directoryPath, filename);
   if (Buffer.isBuffer(mediaItem)) {
-    const filename = generateRandomFilename();
-    const filePath = path.join(directoryPath, filename);
-    await fs.writeFile(filePath, mediaItem);
+    await writeFile(filePath, mediaItem);
     return filePath;
   }
-  return null; // error too
+  if (typeof mediaItem?.pipe === 'function') {
+    const writeStream = createWriteStream(filePath);
+    return new Promise((resolve, reject) => {
+      mediaItem
+        .pipe(writeStream)
+        .on('finish', () => resolve(filePath))
+        .on('error', reject);
+    });
+  }
+  return null; // TODO: think about error maybe?
 };

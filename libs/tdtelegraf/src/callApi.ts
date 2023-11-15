@@ -5,7 +5,6 @@ import { log } from '@lskjs/log/log';
 import { map } from 'fishbird';
 import { mkdir, writeFile } from 'fs/promises';
 
-import { downloadFile } from './downloadFile';
 import { uploadMedia } from './uploadMedia';
 import { convertBotChatActionToTDL, convertToPhotoSize } from './utils';
 
@@ -140,31 +139,27 @@ export async function callApi(name, props: any, clientOptions: any) {
     if (name === 'sendPhoto') {
       this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
       const chatId = props.chat_id;
-      const { photo, caption } = props;
+      const { photo } = props;
       if (!photo) throw new Err('!props.photo');
-      const messageContent = {} as any;
-      // TODO: check from buffer etc.
-      if (typeof photo === 'string' || typeof photo?.source === 'string') {
-        // TODO: rework
-        messageContent.photo = {
-          _: 'inputFileLocal',
-          path: photo?.source || photo,
-        };
-      }
-      if (typeof caption === 'string') {
-        messageContent.caption = wrapText(caption);
-      }
-      const data = omitNull({
+      const filePath = await uploadMedia(props.photo, '/tmp');
+      const data = {
         _: 'sendMessage',
         chat_id: chatId,
         input_message_content: {
           _: 'inputMessagePhoto',
-          ...messageContent,
+          photo: {
+            _: 'inputFileLocal',
+            path: filePath,
+          },
+          caption: props?.caption ? wrapText(props?.caption) : null,
         },
         ...extra,
-      });
+      };
+      await saveMock(`${name}.tdlib.req.json`, data);
       const res = await this.tdlib.invoke(data);
+      await saveMock(`${name}.tdlib.res.json`, res);
       const tres = transformRes(res);
+      await saveMock(`${name}.callApi.res.json`, tres);
       return tres;
     }
     if (name === 'sendVideo') {

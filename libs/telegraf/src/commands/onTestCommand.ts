@@ -148,11 +148,6 @@ export const createOnTestCommand = ({ assetsDir }) =>
         log.error('[err] 4.4. Image (FileByReadableStream) with caption', err);
       });
 
-    // export type InputFile =
-    // | InputFileByPath
-    // | InputFileByReadableStream
-    // | InputFileByBuffer
-    // | InputFileByURL
     await wait();
     await ctx.sendChatAction('upload_photo');
     await wait();
