@@ -7,6 +7,7 @@ import { mkdir, writeFile } from 'fs/promises';
 
 import { downloadFile } from './downloadFile';
 import { convertBotChatActionToTDL, convertToPhotoSize } from './utils';
+import { uploadMedia } from './uploadMedia';
 
 const saveMock = async (name, data) => {
   if (isDev) {
@@ -114,6 +115,7 @@ export async function callApi(name, props: any, clientOptions: any) {
       // this.log.trace('[callApi]', `[${name}] res`, res);
       return res;
     }
+    // TODO: unionize sendMessage
     if (name === 'sendMessage') {
       this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
       const chatId = props.chat_id;
@@ -168,8 +170,8 @@ export async function callApi(name, props: any, clientOptions: any) {
     if (name === 'sendVideo') {
       this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
       const chatId = props.chat_id;
-      if (!props.video?.url) throw new Err('!props.video?.url');
-      const filePath = await downloadFile(props.video?.url, '/tmp');
+      if (!props.video) throw new Err('!props.video');
+      const filePath = await uploadMedia(props.video, '/tmp');
       const data = {
         _: 'sendMessage',
         chat_id: chatId,
@@ -190,11 +192,36 @@ export async function callApi(name, props: any, clientOptions: any) {
       await saveMock(`${name}.callApi.res.json`, tres);
       return tres;
     }
+    if (name === 'sendDocument') {
+      this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
+      const chatId = props.chat_id;
+      if (!props.document) throw new Err('!props.document');
+      const filePath = await uploadMedia(props.document, '/tmp');
+      const data = {
+        _: 'sendMessage',
+        chat_id: chatId,
+        input_message_content: {
+          _: 'inputMessageDocument',
+          document: {
+            _: 'inputFileLocal',
+            path: filePath,
+          },
+          caption: props?.caption ? wrapText(props?.caption) : null,
+        },
+        ...extra,
+      };
+      await saveMock(`${name}.tdlib.req.json`, data);
+      const res = await this.tdlib.invoke(data);
+      await saveMock(`${name}.tdlib.res.json`, res);
+      const tres = transformRes(res);
+      await saveMock(`${name}.callApi.res.json`, tres);
+      return tres;
+    }
     if (name === 'sendAudio') {
       this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
       const chatId = props.chat_id;
-      if (!props.audio?.url) throw new Err('!props.audio?.url');
-      const filePath = await downloadFile(props.audio?.url, '/tmp');
+      if (!props.audio) throw new Err('!props.audio');
+      const filePath = await uploadMedia(props.audio, '/tmp');
       const data = {
         _: 'sendMessage',
         chat_id: chatId,
@@ -218,8 +245,8 @@ export async function callApi(name, props: any, clientOptions: any) {
     if (name === 'sendVoice') {
       this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
       const chatId = props.chat_id;
-      if (!props.voice?.url) throw new Err('!props.voice?.url');
-      const filePath = await downloadFile(props.voice?.url, '/tmp');
+      if (!props.voice) throw new Err('!props.voice');
+      const filePath = await uploadMedia(props.voice, '/tmp');
       const data = {
         _: 'sendMessage',
         chat_id: chatId,
@@ -243,8 +270,8 @@ export async function callApi(name, props: any, clientOptions: any) {
     if (name === 'sendVideoNote') {
       this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
       const chatId = props.chat_id;
-      if (!props.video_note?.url) throw new Err('!props.video_note?.url');
-      const filePath = await downloadFile(props.video_note?.url, '/tmp');
+      if (!props.video_note) throw new Err('!props.video_note');
+      const filePath = await uploadMedia(props.video_note, '/tmp');
       const data = {
         _: 'sendMessage',
         chat_id: chatId,
@@ -276,7 +303,7 @@ export async function callApi(name, props: any, clientOptions: any) {
             _: mediaItem?.type === 'video' ? 'inputMessageVideo' : 'inputMessagePhoto',
             [mediaItem?.type]: {
               _: 'inputFileLocal',
-              path: await downloadFile(mediaItem?.media.url, '/tmp'),
+              path: await uploadMedia(mediaItem?.media, '/tmp'),
             },
             caption: mediaItem?.caption ? wrapText(mediaItem?.caption) : null,
           }),
