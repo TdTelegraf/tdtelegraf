@@ -1,8 +1,23 @@
 /* eslint-disable max-len */
+import { log } from '@lskjs/log/log';
 import { delay } from 'fishbird';
 import { readFileSync } from 'fs';
 import { Context } from 'telegraf';
 import { Update } from 'telegraf/types';
+
+export const mdExampleMin = `
+*bold text*
+_italic text_
+__underline__
+[inline URL](http://www.example.com/)
+`;
+
+export const htmlExampleMin = `
+<b>bold text</b>
+<i>italic text</i>
+<u>underline</u>
+<a href="http://www.example.com/">inline URL</a>
+`;
 
 export const mdExample = `
 *bold \\*text*
@@ -39,90 +54,136 @@ export const htmlExample = `
 
 const wait = () => delay(2000);
 
-export async function onTestCommand(ctx: Context<Update>) {
-  await ctx.reply('Test start', { reply_to_message_id: ctx.message?.message_id });
+export const createOnTestCommand = ({ assetsDir }) =>
+  async function onTestCommandSample(ctx: Context<Update>) {
+    await ctx.reply('Test start', { reply_to_message_id: ctx.message?.message_id });
 
-  await wait();
-  await ctx.sendChatAction('typing');
+    await wait();
+    await ctx.sendChatAction('typing');
 
-  await wait();
-  await ctx.reply('1. Text Message');
+    await wait();
+    await ctx.reply('1. Text Message').catch((err) => {
+      log.error('[err] 1. Text Message ', err);
+    });
 
-  await ctx.sendChatAction('typing');
-  await wait();
-  await ctx.replyWithMarkdown(`2\\. Text Message with MarkDown and some formatting\n${mdExample}`, {
-    parse_mode: 'MarkdownV2',
-  });
+    await ctx.sendChatAction('typing');
+    await wait();
+    await ctx
+      .replyWithMarkdown(`2 Text Message with Markdown\n${mdExampleMin}`, {
+        parse_mode: 'MarkdownV2',
+      })
+      .catch((err) => {
+        log.error('[err] 2 Text Message with Markdown ', err);
+      });
 
-  await ctx.sendChatAction('typing');
-  await wait();
-  await ctx.replyWithHTML(`3. Text Message with HTML and some formatting\n${htmlExample}`);
+    await ctx.sendChatAction('typing');
+    await wait();
+    await ctx.replyWithHTML(`3. Text Message with HTML\n${htmlExampleMin}`).catch((err) => {
+      log.error('[err] 3. Text Message with HTML ', err);
+    });
 
-  await ctx.sendChatAction('upload_photo');
-  await wait();
-  await ctx.replyWithPhoto(
-    { source: `${__dirname}/../assets/photo1.jpg` },
-    { caption: '4. Image with caption' },
-  );
+    await ctx.sendChatAction('upload_photo');
+    await wait();
+    await ctx
+      .replyWithPhoto({ source: `${assetsDir}/photo1.jpg` }, { caption: '4. Image with caption' })
+      .catch((err) => {
+        log.error('[err] 4. Image with caption ', err);
+      });
 
-  // export type InputFile =
-  // | InputFileByPath
-  // | InputFileByReadableStream
-  // | InputFileByBuffer
-  // | InputFileByURL
-  await ctx.sendChatAction('upload_photo');
-  await wait();
-  await ctx.sendMediaGroup([
-    {
-      type: 'photo',
-      media: {
-        source: readFileSync(`${__dirname}/../assets/photo2.png`),
-        filename: 'Фотка 2',
-      },
-      caption: '5. Media Group with images with caption',
-    },
-    {
-      type: 'photo',
-      media: {
-        source: readFileSync(`${__dirname}/../assets/photo3.webp`),
-        filename: 'Фотка 3',
-      },
-      // caption: 'Second image',
-    },
-  ]);
+    // export type InputFile =
+    // | InputFileByPath
+    // | InputFileByReadableStream
+    // | InputFileByBuffer
+    // | InputFileByURL
+    await ctx.sendChatAction('upload_photo');
+    await wait();
+    await ctx
+      .sendMediaGroup([
+        {
+          type: 'photo',
+          media: {
+            source: readFileSync(`${assetsDir}/photo2.png`),
+            filename: 'Фотка 2',
+          },
+          caption: '5. Media Group with images with caption',
+        },
+        {
+          type: 'photo',
+          media: {
+            source: readFileSync(`${assetsDir}/photo3.webp`),
+            filename: 'Фотка 3',
+          },
+          // caption: 'Second image',
+        },
+      ])
+      .catch((err) => {
+        log.error('[err] 5. Media Group with images with caption ', err);
+      });
 
-  await ctx.sendChatAction('upload_video');
-  await wait();
-  await ctx.replyWithVideo(
-    { source: `${__dirname}/../assets/video.mov` },
-    { caption: '6. Video with caption' },
-  );
+    await ctx.sendChatAction('upload_video');
+    await wait();
+    await ctx
+      .replyWithVideo({ source: `${assetsDir}/video.mov` }, { caption: '6. Video with caption' })
+      .catch((err) => {
+        log.error('[err] 6. Video with caption', err);
+      });
 
-  await ctx.sendChatAction('record_video_note');
-  await wait();
-  await ctx.replyWithVideoNote({ source: `${__dirname}/../assets/videoNote.mp4` }); // '7. VideoNote'
+    await ctx.sendChatAction('record_video_note');
+    await wait();
+    await ctx.replyWithVideoNote({ source: `${assetsDir}/videoNote.mp4` }).catch((err) => {
+      log.error('[err] 7. VideoNote', err);
+    });
 
-  await ctx.sendChatAction('upload_document');
-  await wait();
-  await ctx.replyWithDocument(
-    { source: `${__dirname}/../assets/gif.mp4` },
-    { caption: '*. Document aka GIF with caption' },
-  );
+    await ctx.sendChatAction('upload_document');
+    await wait();
+    await ctx
+      .replyWithDocument(
+        { source: `${assetsDir}/gif.mp4` },
+        { caption: '8. Document aka GIF with caption' },
+      )
+      .catch((err) => {
+        log.error('[err] 8. Document aka GIF with caption', err);
+      });
 
-  await ctx.sendChatAction('upload_document');
-  await wait();
-  await ctx.replyWithDocument(
-    { source: `${__dirname}/../assets/like-gif.mp4` },
-    { caption: '9. MP4 without sound aka GIF with caption' },
-  );
+    await ctx.sendChatAction('upload_document');
+    await wait();
+    await ctx
+      .replyWithDocument(
+        { source: `${assetsDir}/like-gif.mp4` },
+        { caption: '9. MP4 without sound aka GIF with caption' },
+      )
+      .catch((err) => {
+        log.error('[err] 9. MP4 without sound aka GIF with caption', err);
+      });
 
-  await ctx.sendChatAction('upload_document');
-  await wait();
-  await ctx.replyWithDocument(
-    { source: `${__dirname}/../assets/file.json` },
-    { caption: '10. File with caption' },
-  );
+    await ctx.sendChatAction('upload_document');
+    await wait();
+    await ctx
+      .replyWithDocument({ source: `${assetsDir}/file.json` }, { caption: '10. File with caption' })
+      .catch((err) => {
+        log.error('[err] 10. File with caption', err);
+      });
 
-  await wait();
-  await ctx.reply('Test finish');
-}
+    await ctx.sendChatAction('typing');
+    await wait();
+    await ctx
+      .replyWithMarkdown(`12 Text Message with Markdown - Extendended\n${mdExample}`, {
+        parse_mode: 'MarkdownV2',
+      })
+      .catch((err) => {
+        log.error('[err] 12 Text Message with Markdown - Extendended', err);
+      });
+
+    await ctx.sendChatAction('typing');
+    await wait();
+    await ctx
+      .replyWithHTML(`13. Text Message with HTML - Extendended\n${htmlExample}`)
+      .catch((err) => {
+        log.error('[err] 13. Text Message with HTML - Extendended', err);
+      });
+
+    await wait();
+    await ctx.reply('Test finish');
+  };
+
+export const onTestCommand = createOnTestCommand({ assetsDir: `${process.cwd()}/test/assets` });

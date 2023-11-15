@@ -1,3 +1,4 @@
+export * from './catchMiddleware';
 export * from './saveMiddleware';
 export * from './saveOutMiddleware';
 export * from './ignoreMiddleware';
