@@ -1,9 +1,12 @@
 /* eslint-disable max-len */
+import { createReadStream, readFileSync } from 'node:fs';
+
 import { log } from '@lskjs/log/log';
 import { delay } from 'fishbird';
-import { readFileSync } from 'fs';
 import { Context } from 'telegraf';
 import { Update } from 'telegraf/types';
+
+const debugUserId = 1227280;
 
 export const mdExampleMin = `
 *bold text*
@@ -20,14 +23,14 @@ export const htmlExampleMin = `
 `;
 
 export const mdExample = `
-*bold \\*text*
-_italic \\*text_
+*bold text*
+_italic *text_
 __underline__
 ~strikethrough~
 ||spoiler||
 *bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
 [inline URL](http://www.example.com/)
-[inline mention of a user](tg://user?id=123456789)
+[inline mention of a user](tg://user?id=${debugUserId})
 ![👍](tg://emoji?id=5368324170671202286)
 \`inline fixed-width code\`
 \`\`\`
@@ -36,7 +39,26 @@ pre-formatted fixed-width code block
 \`\`\`python
 pre-formatted fixed-width code block written in the Python programming language
 \`\`\`  
-  `;
+`;
+
+export const mdExampleExtended = `
+*bold \\*text*
+_italic \\*text_
+__underline__
+~strikethrough~
+||spoiler||
+*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+[inline URL](http://www.example.com/)
+[inline mention of a user](tg://user?id=${debugUserId})
+![👍](tg://emoji?id=5368324170671202286)
+\`inline fixed-width code\`
+\`\`\`
+pre-formatted fixed-width code block
+\`\`\`
+\`\`\`python
+pre-formatted fixed-width code block written in the Python programming language
+\`\`\`  
+`;
 
 export const htmlExample = `
 <b>bold *text*</b>
@@ -46,7 +68,7 @@ export const htmlExample = `
 <span class="tg-spoiler">poiler</span>
 <b>bold <i>italic bold <s>italic bold strikethrough <span class="tg-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
 <a href="http://www.example.com/">inline URL</a>
-<a href="tg://user?id=123456789">inline mention of a user</a>
+<a href="tg://user?id=${debugUserId}">inline mention of a user</a>
 <code>inline fixed-width code</code>
 <pre>pre-formatted fixed-width code block</pre>
 <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
@@ -60,12 +82,12 @@ export const createOnTestCommand = ({ assetsDir }) =>
 
     await wait();
     await ctx.sendChatAction('typing');
-
     await wait();
     await ctx.reply('1. Text Message').catch((err) => {
       log.error('[err] 1. Text Message ', err);
     });
 
+    await wait();
     await ctx.sendChatAction('typing');
     await wait();
     await ctx
@@ -76,18 +98,54 @@ export const createOnTestCommand = ({ assetsDir }) =>
         log.error('[err] 2 Text Message with Markdown ', err);
       });
 
+    await wait();
     await ctx.sendChatAction('typing');
     await wait();
     await ctx.replyWithHTML(`3. Text Message with HTML\n${htmlExampleMin}`).catch((err) => {
       log.error('[err] 3. Text Message with HTML ', err);
     });
 
+    await wait();
     await ctx.sendChatAction('upload_photo');
     await wait();
     await ctx
-      .replyWithPhoto({ source: `${assetsDir}/photo1.jpg` }, { caption: '4. Image with caption' })
+      .replyWithPhoto(
+        { source: `${assetsDir}/photo1.jpg` },
+        { caption: '4.1. Image (FileByPath) with caption' },
+      )
       .catch((err) => {
-        log.error('[err] 4. Image with caption ', err);
+        log.error('[err] 4.1. Image (FileByPath) with caption', err);
+      });
+    await wait();
+    await ctx
+      .replyWithPhoto(
+        { source: readFileSync(`${assetsDir}/photo2.png`) },
+        { caption: '4.2. Image (FileByBuffer) with caption' },
+      )
+      .catch((err) => {
+        log.error('[err] 4.2. Image (FileByBuffer) with caption', err);
+      });
+    await wait();
+    await ctx
+      .replyWithPhoto(
+        {
+          source: `https://github.com/TdTelegraf/tdtelegraf/blob/master/libs/tdtelegraf/test/assets/photo1.jpg?raw=true`,
+        },
+        { caption: '4.3. Image (FileByUrl) with caption' },
+      )
+      .catch((err) => {
+        log.error('[err] 4.3. Image (FileByUrl) with caption', err);
+      });
+    await wait();
+    await ctx
+      .replyWithPhoto(
+        {
+          source: createReadStream(`${assetsDir}/photo1.jpg`),
+        },
+        { caption: '4.4. Image (FileByReadableStream) with caption' },
+      )
+      .catch((err) => {
+        log.error('[err] 4.4. Image (FileByReadableStream) with caption', err);
       });
 
     // export type InputFile =
@@ -95,6 +153,7 @@ export const createOnTestCommand = ({ assetsDir }) =>
     // | InputFileByReadableStream
     // | InputFileByBuffer
     // | InputFileByURL
+    await wait();
     await ctx.sendChatAction('upload_photo');
     await wait();
     await ctx
@@ -120,6 +179,7 @@ export const createOnTestCommand = ({ assetsDir }) =>
         log.error('[err] 5. Media Group with images with caption ', err);
       });
 
+    await wait();
     await ctx.sendChatAction('upload_video');
     await wait();
     await ctx
@@ -128,12 +188,14 @@ export const createOnTestCommand = ({ assetsDir }) =>
         log.error('[err] 6. Video with caption', err);
       });
 
+    await wait();
     await ctx.sendChatAction('record_video_note');
     await wait();
     await ctx.replyWithVideoNote({ source: `${assetsDir}/videoNote.mp4` }).catch((err) => {
       log.error('[err] 7. VideoNote', err);
     });
 
+    await wait();
     await ctx.sendChatAction('upload_document');
     await wait();
     await ctx
@@ -145,6 +207,7 @@ export const createOnTestCommand = ({ assetsDir }) =>
         log.error('[err] 8. Document aka GIF with caption', err);
       });
 
+    await wait();
     await ctx.sendChatAction('upload_document');
     await wait();
     await ctx
@@ -156,6 +219,7 @@ export const createOnTestCommand = ({ assetsDir }) =>
         log.error('[err] 9. MP4 without sound aka GIF with caption', err);
       });
 
+    await wait();
     await ctx.sendChatAction('upload_document');
     await wait();
     await ctx
@@ -164,16 +228,20 @@ export const createOnTestCommand = ({ assetsDir }) =>
         log.error('[err] 10. File with caption', err);
       });
 
+    await wait();
     await ctx.sendChatAction('typing');
     await wait();
     await ctx
       .replyWithMarkdown(`12 Text Message with Markdown - Extendended\n${mdExample}`, {
         parse_mode: 'MarkdownV2',
+        // force: true,
       })
       .catch((err) => {
         log.error('[err] 12 Text Message with Markdown - Extendended', err);
+        ctx.reply(`[err] ${err.message}`);
       });
 
+    await wait();
     await ctx.sendChatAction('typing');
     await wait();
     await ctx

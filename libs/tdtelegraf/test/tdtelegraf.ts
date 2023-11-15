@@ -76,7 +76,7 @@ async function main() {
   log.info('Bot started', bot.botInfo?.id, bot.botInfo?.username);
   const res = await bot.telegram.sendMessage(
     debugChatId,
-    `I'm started on ${stage} in debug mode 🙈`,
+    `I'm started on ${stage} in debug mode 🙈\n\n/ping\n/chatid\n/test`,
   );
   log.debug('sendMessage', res);
 }

@@ -6,8 +6,8 @@ import { map } from 'fishbird';
 import { mkdir, writeFile } from 'fs/promises';
 
 import { downloadFile } from './downloadFile';
-import { convertBotChatActionToTDL, convertToPhotoSize } from './utils';
 import { uploadMedia } from './uploadMedia';
+import { convertBotChatActionToTDL, convertToPhotoSize } from './utils';
 
 const saveMock = async (name, data) => {
   if (isDev) {
@@ -65,7 +65,7 @@ export async function callApi(name, props: any, clientOptions: any) {
         });
 
         if (res._ === 'error') {
-          log.warn('[wrapText]', res._, rawText);
+          log.warn('[wrapText]', res, rawText);
           return {
             _: 'formattedText',
             text: rawText,
