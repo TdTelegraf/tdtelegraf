@@ -24,7 +24,7 @@ export const htmlExampleMin = `
 
 export const mdExample = `
 *bold text*
-_italic *text_
+_italic text_
 __underline__
 ~strikethrough~
 ||spoiler||
@@ -42,6 +42,7 @@ pre-formatted fixed-width code block written in the Python programming language
 `;
 
 export const mdExampleExtended = `
+Hello - world
 *bold \\*text*
 _italic \\*text_
 __underline__
@@ -255,12 +256,12 @@ export const createOnTestCommand = ({ assetsDir }) =>
       await ctx.sendChatAction('typing');
       await wait();
       await ctx
-        .replyWithMarkdown(`12 Text Message with Markdown - Extendended\n${mdExample}`, {
+        .replyWithMarkdown(`12 Text Message with Markdown Extendended\n${mdExample}`, {
           parse_mode: 'MarkdownV2',
           // force: true,
         })
         .catch((err) => {
-          log.error('[err] 12 Text Message with Markdown - Extendended', err);
+          log.error('[err] 12 Text Message with Markdown Extendended', err);
           ctx.reply(`[err] ${err.message}`);
         });
     }
@@ -270,9 +271,9 @@ export const createOnTestCommand = ({ assetsDir }) =>
       await ctx.sendChatAction('typing');
       await wait();
       await ctx
-        .replyWithHTML(`13. Text Message with HTML - Extendended\n${htmlExample}`)
+        .replyWithHTML(`13. Text Message with HTML Extendended\n${htmlExample}`)
         .catch((err) => {
-          log.error('[err] 13. Text Message with HTML - Extendended', err);
+          log.error('[err] 13. Text Message with HTML Extendended', err);
         });
     }
 

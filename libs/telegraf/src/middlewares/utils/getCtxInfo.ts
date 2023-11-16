@@ -12,6 +12,15 @@ export const getTitle = (info) => {
   return null;
 };
 
+const getPrimaryKey = (ctx) => {
+  const ignoredCtxKeys = ['telegram', 'botInfo', 'state'];
+  const ignoredUpdateKeys = ['update_id', 'botInfo', 'state'];
+  const keys = Object.keys(ctx).filter(
+    (key) => !ignoredCtxKeys.includes(key) && !ignoredUpdateKeys.includes(key),
+  );
+  return keys[0];
+};
+
 export const getCtxInfo = (ctx) => {
   const { botInfo } = ctx;
   const callApiOptions = ctx?.callApiOptions;
@@ -35,6 +44,7 @@ export const getCtxInfo = (ctx) => {
   let method: any;
   let action: any;
 
+  let messageClass: any;
   let messageType: any;
   let messageText: any;
 
@@ -69,9 +79,9 @@ export const getCtxInfo = (ctx) => {
     method = callApiOptions?.method;
     action = callApiOptions?.payload?.action;
 
-    // if (!chatTitle) {
-    //   console.log('[res]', res, { chatId });
-    // }
+    if (method?.startsWith('send') || method === 'onUpdate' || method === 'updateNewMessage') {
+      messageClass = 'message';
+    }
     // TODO: check media
     messageType = res ? getMessageType(res) : getMessageType(callApiOptions?.payload);
     if (isResArray) {
@@ -86,43 +96,53 @@ export const getCtxInfo = (ctx) => {
   } else {
     direction = 'in';
 
-    const message = ctx?.update?.message;
-    const callback_query = ctx?.update?.callback_query;
-    const my_chat_member = ctx?.my_chat_member;
-
-    const from = message?.from || callback_query?.from || my_chat_member?.from;
-    const chat = message?.chat || callback_query?.chat || my_chat_member?.chat;
-
-    fromId = from?.id;
-    fromUsername = from?.username;
-    fromTitle = getTitle(from);
-
-    chatType = chat?.type || chat?.message?.type;
-    chatId = chat?.id;
-    chatUsername = chat?.username;
-    chatTitle = getTitle(chat);
-
-    method = 'onUpdate';
-
-    if (my_chat_member) {
-      action = my_chat_member?.new_chat_member?.status;
-    } else if (callback_query) {
-      action = 'callback';
+    let primaryKey: any;
+    let res: any;
+    // /Users/isuvorov/projects/telegraf/src/context.ts
+    if (ctx.update) {
+      primaryKey = getPrimaryKey(ctx.update);
+      res = ctx.update[primaryKey];
+    } else {
+      primaryKey = getPrimaryKey(ctx);
+      res = ctx[primaryKey];
     }
-    messageType = getMessageType(message || {});
-    messageText = message?.text || callback_query?.data || '';
+
+    // console.log('[ctx]', ctx);
+    // console.log('[primaryKey]', { primaryKey });
+    // console.log('[res]', { res });
+
+    fromId = res?.from?.id;
+    fromUsername = res?.from?.username;
+    fromTitle = getTitle(res?.from);
+
+    chatType = res?.chat?.type;
+    chatId = res?.chat?.id;
+    chatUsername = res?.chat?.username;
+    chatTitle = getTitle(res?.chat);
+
+    messageType = getMessageType(res);
+    messageText = getMessageText(res); // todo: callback data
+
+    messageClass = primaryKey;
+    if (primaryKey === 'my_chat_member') {
+      messageType = ctx?.my_chat_member?.new_chat_member?.status;
+    }
+    if (messageType === 'new_chat_title') {
+      messageText = res?.new_chat_title;
+    }
+    method = 'onUpdate';
   }
 
-  let messageClass;
-  if (action) {
-    messageClass = 'action';
-    messageType = action;
-  } else if (method?.startsWith('send') || method === 'onUpdate' || method === 'updateNewMessage') {
-    messageClass = 'message';
-  } else {
-    console.log('??? [ctx]', ctx, { method, action });
-    messageClass = '??';
-  }
+  // let messageClass;
+  // if (primaryKey) {
+  //   messageClass = primaryKey
+  //   // messageType = action;
+  // } else if (method?.startsWith('send') || method === 'onUpdate' || method === 'updateNewMessage') {
+  //   messageClass = 'message';
+  // } else {
+  //   console.log('??? [ctx]', ctx, { method, action });
+  // }
+  if (!messageClass) messageClass = '??';
 
   return {
     direction,
