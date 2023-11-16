@@ -79,19 +79,28 @@ export const getCtxInfo = (ctx) => {
     method = callApiOptions?.method;
     action = callApiOptions?.payload?.action;
 
-    if (method?.startsWith('send') || method === 'onUpdate' || method === 'updateNewMessage') {
+    if (action) {
+      messageClass = 'action';
+      messageType = action;
+    } else if (
+      method?.startsWith('send') ||
+      method === 'onUpdate' ||
+      method === 'updateNewMessage'
+    ) {
       messageClass = 'message';
     }
-    // TODO: check media
-    messageType = res ? getMessageType(res) : getMessageType(callApiOptions?.payload);
-    if (isResArray) {
-      const types = callApiOptions?.res.map((item) => getMessageType(item));
-      messageType = `media ${types.join(',')}`;
-      const texts = callApiOptions?.res.map((item) => getMessageText(item));
-      messageText = texts.filter(Boolean).join(' ');
-    } else {
+    if (messageClass === 'message') {
+      // TODO: check media
       messageType = res ? getMessageType(res) : getMessageType(callApiOptions?.payload);
-      messageText = res ? getMessageText(res) : getMessageText(callApiOptions?.payload);
+      if (isResArray) {
+        const types = callApiOptions?.res.map((item) => getMessageType(item));
+        messageType = `media ${types.join(',')}`;
+        const texts = callApiOptions?.res.map((item) => getMessageText(item));
+        messageText = texts.filter(Boolean).join(' ');
+      } else {
+        messageType = res ? getMessageType(res) : getMessageType(callApiOptions?.payload);
+        messageText = res ? getMessageText(res) : getMessageText(callApiOptions?.payload);
+      }
     }
   } else {
     direction = 'in';
