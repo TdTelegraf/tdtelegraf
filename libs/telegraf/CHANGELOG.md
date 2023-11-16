@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.20.0](https://github.com/lskjs/lskjs/compare/v3.19.6...v3.20.0) (2023-11-16)
+
+
+### Bug Fixes
+
+* log actions ([6c66811](https://github.com/lskjs/lskjs/commit/6c668113430247a06d6de7534f684e90a2b7b4e1))
+* tests and logger ([564f0db](https://github.com/lskjs/lskjs/commit/564f0dbf0deddc47934e216464e1795ec4d23501))
+
+
+### Features
+
+* add more file testcases ([9eeb1a8](https://github.com/lskjs/lskjs/commit/9eeb1a821bd699fe2ca46f7f33e1906c06997d01))
+* add uploadMedus FileByStream ([7b53752](https://github.com/lskjs/lskjs/commit/7b53752814a3454632831e8d0f1743d534ce68be))
+* stable input output logger ([87a7802](https://github.com/lskjs/lskjs/commit/87a780212e8ec1a635c67c036997d47f64a1ae19))
+* stable tests ([9ef69c8](https://github.com/lskjs/lskjs/commit/9ef69c8249267a9dca048ec80298f688ecbcecf8))
+
+
+
+
+
 ## [3.19.6](https://github.com/lskjs/lskjs/compare/v3.19.5...v3.19.6) (2023-11-14)
 
 

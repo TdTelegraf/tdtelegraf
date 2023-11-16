@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.20.0](https://github.com/TdTelegraf/tdtelegraf/compare/v3.19.6...v3.20.0) (2023-11-16)
+
+
+### Bug Fixes
+
+* uploadMedia ([bac686d](https://github.com/TdTelegraf/tdtelegraf/commit/bac686d37a0784408fae176234e87d65f5db0743))
+
+
+### Features
+
+* add more file testcases ([9eeb1a8](https://github.com/TdTelegraf/tdtelegraf/commit/9eeb1a821bd699fe2ca46f7f33e1906c06997d01))
+* add uploadMedus FileByStream ([7b53752](https://github.com/TdTelegraf/tdtelegraf/commit/7b53752814a3454632831e8d0f1743d534ce68be))
+* add uploadMedus FileByUrl ([dfcbe4a](https://github.com/TdTelegraf/tdtelegraf/commit/dfcbe4a5eb86720ed6548b25993209c84f6459fb))
+* stable input output logger ([87a7802](https://github.com/TdTelegraf/tdtelegraf/commit/87a780212e8ec1a635c67c036997d47f64a1ae19))
+* stable tests ([9ef69c8](https://github.com/TdTelegraf/tdtelegraf/commit/9ef69c8249267a9dca048ec80298f688ecbcecf8))
+
+
+
+
+
 ## [3.19.6](https://github.com/TdTelegraf/tdtelegraf/compare/v3.19.5...v3.19.6) (2023-11-14)
 
 **Note:** Version bump only for package tdtelegraf
