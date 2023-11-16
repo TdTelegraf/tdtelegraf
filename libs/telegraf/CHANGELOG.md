@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.20.1](https://github.com/lskjs/lskjs/compare/v3.20.0...v3.20.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* debug and save db ([7f3d126](https://github.com/lskjs/lskjs/commit/7f3d12601c5b697d0723ec3ad1aea39a4b3e0425))
+
+
+
+
+
 # [3.20.0](https://github.com/lskjs/lskjs/compare/v3.19.6...v3.20.0) (2023-11-16)
 
 
