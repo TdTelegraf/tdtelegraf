@@ -168,7 +168,7 @@ export async function convertToTelegrafMessage(message) {
     from,
     chat: chat2,
     date: message.date,
-    originalContent: message.content._,
+    _content: message.content._,
     _raw: message,
   };
   if (message.content._ === 'messageText') {

@@ -25,7 +25,7 @@ const transformRes = (res) => {
     date: res.date,
     from: {
       id: res.sender_id?.user_id,
-      is_bot: true, // NOTE: подумать поб этом
+      // is_bot: true, // NOTE: подумать поб этом
       is_tdl: true,
     },
     chat: {

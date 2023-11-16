@@ -1,6 +1,8 @@
 import { log as globalLog } from '@lskjs/log/log';
 import { map } from 'fishbird';
 
+import { omitTrash } from '.';
+import { getCtxInfo } from './utils/getCtxInfo';
 import { saveServiceMock } from './utils/saveServiceMock';
 import { SaveService } from './utils/types';
 
@@ -33,20 +35,22 @@ export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =
       );
       return next();
     }
+    const { messageClass } = getCtxInfo(ctx);
+    if (messageClass !== 'message') return next();
     const botId = ctx?.botInfo?.id;
     const chatId = message?.chat?.id;
     const messageId = message?.message_id;
 
     if (!botId) {
-      globalLog.error('FIX: this !botId', message, ctx);
+      globalLog.error('createSaveOutMiddleware FIX: this !botId', messageClass, message, ctx);
       return next();
     }
     if (!chatId) {
-      globalLog.error('FIX: this !chatId', message, ctx);
+      globalLog.error('createSaveOutMiddleware FIX: this !chatId', messageClass, message, ctx);
       return next();
     }
     if (!messageId) {
-      globalLog.error('FIX: this !messageId 22', message, ctx);
+      globalLog.error('createSaveOutMiddleware FIX: this !messageId 22', messageClass, message, ctx);
       return next();
     }
     const $set = {
@@ -56,11 +60,22 @@ export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =
       ...message,
     };
     await Promise.all([
-      service.upsertMessage({ botId, chatId, messageId }, $set),
-      service.upsertChat({ botId, chatId }, { lastMessage: message, updatedAt: new Date() }),
-      service.upsertDialog({ botId, chatId }, { lastMessage: message, updatedAt: new Date() }),
+      service.upsertMessage({ botId, chatId, messageId }, omitTrash($set)),
+      service.upsertChat(
+        { botId, chatId },
+        { lastMessage: omitTrash(message), updatedAt: new Date() },
+      ),
+      service.upsertDialog(
+        { botId, chatId },
+        { lastMessage: omitTrash(message), updatedAt: new Date() },
+      ),
     ]);
-    service.eventEmitter.emit('dialogUpdated', { botId, chatId, event: 'outcomeMessage', $set });
+    service.eventEmitter.emit('dialogUpdated', {
+      botId,
+      chatId,
+      event: 'outcomeMessage',
+      $set: omitTrash($set),
+    });
     return next();
   };
 

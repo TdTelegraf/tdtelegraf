@@ -1,13 +1,22 @@
+import { omit } from '@lskjs/algos';
+import { isDev } from '@lskjs/env';
 import { log as globalLog } from '@lskjs/log/log';
 
 import { getBotLogger } from './utils/getBotLogger';
+import { getCtxInfo } from './utils/getCtxInfo';
 import { saveServiceMock } from './utils/saveServiceMock';
 import { SaveService } from './utils/types';
 
+export const omitTrash = isDev ? (value) => omit(value, ['_raw', '_content']) : (a) => a;
+
 export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
   async function saveMiddleware(ctx, next) {
+    const { messageClass } = getCtxInfo(ctx);
+    if (messageClass !== 'message') return next();
+
     const promises = [];
     const { message } = ctx;
+
     const botId = ctx.botInfo?.id;
     const user = message?.from;
     const userId = user?.id;
@@ -15,15 +24,15 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
     const chatId = chat?.id;
     const messageId = message?.message_id;
     if (!botId) {
-      globalLog.error('FIX: this !botId', message, ctx);
+      globalLog.error('saveMiddleware FIX: this !botId', messageClass, message, ctx);
       return next();
     }
     if (!chatId) {
-      globalLog.error('FIX: this !chatId', message, ctx);
+      globalLog.error('saveMiddleware FIX: this !chatId', messageClass, message, ctx);
       return next();
     }
     if (!messageId) {
-      globalLog.error('FIX: this !messageId 22', message, ctx);
+      globalLog.error('saveMiddleware FIX: this !messageId 22', messageClass, message, ctx);
       return next();
     }
     if (userId && !service.hasUser({ botId, userId })) {
@@ -33,7 +42,7 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
       const photos = await ctx.telegram.getUserProfilePhotos(userId);
       const $set = { ...user, info, photos };
       // console.log('[user]', $set);
-      promises.push(service.upsertUser({ botId, userId }, $set));
+      promises.push(service.upsertUser({ botId, userId }, omitTrash($set)));
     }
     if (chatId && !service.hasChat({ botId, chatId })) {
       // && !(await TelegramChatModel.findOne({ botId, chatId }))) {
@@ -54,11 +63,11 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
       if (message?.message_id) {
         $set = {
           ...$set,
-          lastMessage: message,
+          lastMessage: omitTrash(message),
           updatedAt: new Date(),
         };
       }
-      promises.push(service.upsertChat({ botId, chatId }, $set));
+      promises.push(service.upsertChat({ botId, chatId }, omitTrash($set)));
     }
     let $set;
     if (messageId) {
@@ -68,9 +77,12 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
         messageId,
         ...message,
       };
-      promises.push(service.upsertMessage({ botId, chatId, messageId }, $set));
+      promises.push(service.upsertMessage({ botId, chatId, messageId }, omitTrash($set)));
       promises.push(
-        service.upsertDialog({ botId, chatId }, { lastMessage: message, updatedAt: new Date() }),
+        service.upsertDialog(
+          { botId, chatId },
+          { lastMessage: omitTrash(message), updatedAt: new Date() },
+        ),
       );
 
       // await DialogModel.updateOne(
@@ -105,7 +117,12 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
       // service.upsertDialog({ botId, chatId }, { status: 'ban', updatedAt: new Date() }),
     }
     await Promise.all(promises);
-    service.eventEmitter.emit('dialogUpdated', { botId, chatId, event: 'incomeMessage', $set });
+    service.eventEmitter.emit('dialogUpdated', {
+      botId,
+      chatId,
+      event: 'incomeMessage',
+      $set: omitTrash($set),
+    });
     return next();
   };
 

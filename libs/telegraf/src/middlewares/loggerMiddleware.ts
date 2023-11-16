@@ -95,7 +95,9 @@ export const loggerMiddleware = (ctx, next) => {
       str += ` ${messageText}`;
     }
   }
-  if (isDebug && (action || method)) {
+
+  const showDebug = messageClass === '??' || Boolean(isDebug && (action || method));
+  if (showDebug) {
     str += ` ${JSON.stringify(omitNull({ action, method }))}}`;
   }
 

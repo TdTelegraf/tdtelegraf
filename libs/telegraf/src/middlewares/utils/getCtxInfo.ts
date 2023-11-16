@@ -151,6 +151,7 @@ export const getCtxInfo = (ctx) => {
   // } else {
   //   console.log('??? [ctx]', ctx, { method, action });
   // }
+  if (!messageClass) messageClass = method
   if (!messageClass) messageClass = '??';
 
   return {

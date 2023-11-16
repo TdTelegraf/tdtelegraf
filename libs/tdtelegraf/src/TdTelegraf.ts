@@ -136,7 +136,7 @@ export class TdTelegraf extends LskTelegraf {
       // const ContextType = this.options.contextType;
       // @ts-ignore
       const ctx = new Context(update, this.telegram, this.botInfo);
-      (ctx as any).__tdl = 1;
+      (ctx as any).is_tdl = 1;
       // @ts-ignore
       // ctx.botInfo = this.botInfo;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

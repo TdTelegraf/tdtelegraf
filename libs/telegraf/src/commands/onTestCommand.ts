@@ -79,11 +79,12 @@ const wait = () => delay(2000);
 
 export const createOnTestCommand = ({ assetsDir }) =>
   async function onTestCommandSample(ctx: Context<Update>) {
-    await ctx.reply('Test start', { reply_to_message_id: ctx.message?.message_id });
-
     // @ts-ignore
     const cases = ctx.message?.text?.split(' ')[1]?.split(',') || null;
 
+    if (!cases) {
+      await ctx.reply('Test start', { reply_to_message_id: ctx.message?.message_id });
+    }
     if (!cases || cases.includes('1')) {
       await wait();
       await ctx.sendChatAction('typing');
@@ -277,8 +278,10 @@ export const createOnTestCommand = ({ assetsDir }) =>
         });
     }
 
-    await wait();
-    await ctx.reply('Test finish');
+    if (!cases) {
+      await wait();
+      await ctx.reply('Test finish');
+    }
   };
 
 export const onTestCommand = createOnTestCommand({ assetsDir: `${process.cwd()}/test/assets` });
