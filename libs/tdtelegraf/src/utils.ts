@@ -151,6 +151,7 @@ export async function convertToTelegrafMessage(message) {
     last_name: user.last_name,
     username: user?.usernames?.editable_username || user.username || '',
     language_code: user.language_code,
+    is_tdl: user.id === this.botInfo?.id,
   };
   const chat2 =
     chat.id === from.id
