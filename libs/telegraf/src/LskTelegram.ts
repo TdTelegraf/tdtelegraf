@@ -79,6 +79,7 @@ export class LskTelegram extends Telegram {
         res,
       };
       await this.telegraf.handleUpdateOut(ctx);
+      return res as ReturnType<TelegramType[M]>;
     }
 
     // NOTE: НИЖЕ КОД КОТОРЫЙ ДЕЛАЕТ ТЕСТИРУЕТ НИКИТА

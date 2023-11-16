@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import { getMessageType } from '../../commands/onChatIdCommand';
+import { getMessageType } from '../../utils/getMessageType';
 import { getBotLogger } from './getBotLogger';
 
 export const getInfoFromCtx = (ctx) => {

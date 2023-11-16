@@ -74,7 +74,7 @@ export class LskTelegraf extends Telegraf {
   async launch(config: Telegraf.LaunchOptions = {}) {
     log.debug('Connecting to Telegram');
     this.botInfo ??= await this.telegram.getMe();
-    console.log('this.botInfo', this.botInfo);
+    // console.log('this.botInfo', this.botInfo);
     log.debug(`Launching @${this.botInfo.username}`);
 
     if (config.webhook === undefined) {

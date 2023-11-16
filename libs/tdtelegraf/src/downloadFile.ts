@@ -3,6 +3,8 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
+const isDebug = false;
+
 // Function to generate a random filename
 function generateRandomFilename() {
   const timestamp = Date.now();
@@ -16,7 +18,7 @@ export const downloadFile = async (url, directoryPath) => {
   const filename = generateRandomFilename();
   const filePath = path.join(directoryPath, filename);
 
-  log.debug('[downloadFile]', url, filePath);
+  if (isDebug) log.debug('[downloadFile]', url, filePath);
   const response = await axios({
     method: 'get',
     url,

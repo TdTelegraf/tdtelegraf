@@ -27,10 +27,10 @@ async function main() {
 
   // // NOTE: Default rxample from @lskjs/telegraf tutorial
   bot.useOut(loggerOutMiddleware);
-  bot.useOut(saveOutMiddleware);
+  // bot.useOut(saveOutMiddleware);
 
   bot.use(loggerMiddleware);
-  bot.use(saveMiddleware);
+  // bot.use(saveMiddleware);
   bot.use(ignoreMiddleware);
   bot.command('ping', onPingCommand);
   bot.command('chatid', onChatIdCommand);
@@ -48,7 +48,7 @@ async function main() {
     debugChatId,
     `I'm started on ${stage} in debug mode 🙈\n\n/ping\n/chatid\n/test`,
   );
-  log.debug('sendMessage', res);
+  // log.debug('sendMessage', res);
 }
 
 main().catch(log.fatal.bind(log));

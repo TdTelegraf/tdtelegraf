@@ -48,6 +48,7 @@ const ignoredActions = [
   'updateFile',
   'updateUnconfirmedSession',
   'updateBasicGroup',
+  'updateSavedAnimations',
 ];
 
 interface TdTelegrafOptions extends ClientOptions {

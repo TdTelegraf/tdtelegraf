@@ -2,9 +2,8 @@ import { stage } from '@lskjs/env';
 import { log as globalLog } from '@lskjs/log/log';
 import { map } from 'fishbird';
 
-import { getMessageType } from '../commands/onChatIdCommand';
+import { loggerMiddleware } from '.';
 import { getBotLogger } from './utils/getBotLogger';
-import { getInfoFromCtx } from './utils/getInfoFromCtx';
 
 const isDebug = stage === 'isuvorov';
 // async function saveOutMiddleware(ctx, next, { method, raw, args, res, i }) {
@@ -12,12 +11,22 @@ const mutedMethods = ['getMe', 'getUpdates', 'deleteWebhook'];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function loggerOutMiddleware(ctx, next) {
+  // if (ctx.loggerOutMiddleware) return next(); // NOTE: вырубить когда никита починит
+
   if (mutedMethods.includes(ctx?.callApiOptions?.method)) return next();
+
+  // const ignoreMethods = ['sendMessage', 'updateNewMessage', 'sendMediaGroup', 'sendChatAction'];
+  // if (isDebug && !ignoreMethods.includes(ctx?.callApiOptions?.method)) {
+  //   console.log('ctx?.callApiOptions', ctx?.callApiOptions);
+  // }
   if (!ctx.botInfo) {
     globalLog.warn('!!!ctx.botInfo', ctx.botInfo);
     globalLog.warn('!!!ctx?', ctx);
     return next();
   }
+
+  return loggerMiddleware(ctx, next);
+
   const log = getBotLogger(ctx.botInfo);
   const { method, payload, res, subRes } = ctx?.callApiOptions || {};
   const message = subRes || res;
@@ -38,22 +47,8 @@ export async function loggerOutMiddleware(ctx, next) {
     );
     return next();
   }
-  const { action, user, chat, chatType } = getInfoFromCtx(ctx);
-  const { text } = message;
-  const userOrUserId = user; // || args[0];
-  const messageType = getMessageType(message || {});
-  const str = [
-    method !== 'sendMessage' ? method : '',
-    '=>',
-    action !== 'message' ? `${action} ` : '',
-    `[${userOrUserId}]`,
-    chat && chatType !== 'private' ? `(${chat})` : '',
-    messageType,
-    text,
-  ]
-    .filter(Boolean)
-    .join(' ');
-  // console.log('messageType', messageType, str);
-  log.debug(str);
-  return next();
+
+  // ctx.loggerOutMiddleware = true; // NOTE: вырубить когда никита починит
+  return loggerMiddleware(ctx, next);
+  // return next();
 }

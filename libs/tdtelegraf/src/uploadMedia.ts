@@ -18,13 +18,15 @@ const isUrl = (str) =>
 export const uploadMedia = async (media, directoryPath = '/tmp') => {
   if (!media) return null; // TODO: think about error maybe?
   const mediaItem = media?.source || media;
-  // console.log('[uploadMedia]', { mediaItem }, isUrl(mediaItem));
+  if (media?.url) {
+    const filePath = await downloadFile(media?.url, directoryPath);
+    return filePath;
+  }
+  if (isUrl(mediaItem)) {
+    const filePath = await downloadFile(mediaItem, directoryPath);
+    return filePath;
+  }
   if (typeof mediaItem === 'string') {
-    if (isUrl(mediaItem)) {
-      const filePath = await downloadFile(mediaItem, directoryPath);
-      // console.log({ filePath });
-      return filePath;
-    }
     return mediaItem;
   }
   const filename = generateRandomFilename();
