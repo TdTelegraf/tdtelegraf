@@ -1,6 +1,6 @@
 {
   "name": "tdtelegraf",
-  "version": "3.20.1",
+  "version": "3.20.2",
   "description": "Crossover Tdlib with Telegraf framework – easy way to create Telegram bots with Telegram personal accounts",
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
   "private": false,

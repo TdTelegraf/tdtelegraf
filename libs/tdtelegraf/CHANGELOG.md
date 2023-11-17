@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.20.2](https://github.com/TdTelegraf/tdtelegraf/compare/v3.20.1...v3.20.2) (2023-11-17)
+
+
+### Bug Fixes
+
+* is_tdl for bot ([bd84158](https://github.com/TdTelegraf/tdtelegraf/commit/bd841585cb8d7142d7d8ac48e1ac66b59029a9c1))
+
+
+
+
+
 ## [3.20.1](https://github.com/TdTelegraf/tdtelegraf/compare/v3.20.0...v3.20.1) (2023-11-16)
 
 
