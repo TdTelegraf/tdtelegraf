@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.21.0](https://github.com/TdTelegraf/tdtelegraf/compare/v3.20.3...v3.21.0) (2023-11-17)
+
+**Note:** Version bump only for package tdtelegraf
+
+
+
+
+
 ## [3.20.3](https://github.com/TdTelegraf/tdtelegraf/compare/v3.20.2...v3.20.3) (2023-11-17)
 
 **Note:** Version bump only for package tdtelegraf

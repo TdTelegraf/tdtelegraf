@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.21.0](https://github.com/TdTelegraf/tdtelegraf/compare/v3.20.3...v3.21.0) (2023-11-17)
+
+
+### Features
+
+* axport utils ([603a28e](https://github.com/TdTelegraf/tdtelegraf/commit/603a28e20a77ac8e1bcfd8ac23ef0f8aeadb758e))
+
+
+
+
+
 ## [3.20.3](https://github.com/TdTelegraf/tdtelegraf/compare/v3.20.2...v3.20.3) (2023-11-17)
 
 
