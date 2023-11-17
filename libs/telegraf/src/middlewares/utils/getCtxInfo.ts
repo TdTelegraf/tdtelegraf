@@ -50,6 +50,7 @@ export const getCtxInfo = (ctx) => {
 
   if (callApiOptions) {
     direction = 'out';
+    console.log('[callApiOptions]', callApiOptions);
 
     const isResArray = Array.isArray(callApiOptions?.res);
     const res = isResArray ? callApiOptions?.res[0] : callApiOptions?.subRes || callApiOptions?.res;
@@ -71,7 +72,7 @@ export const getCtxInfo = (ctx) => {
       chatTitle = getTitle(res?.chat);
     } else {
       chatType = null;
-      chatId = callApiOptions?.payload?.chat_id;
+      chatId = callApiOptions?.payload?.chat_id || callApiOptions?.payload?.user_id; // NOTE: подумать а правильно ли user_id
       chatUsername = null;
       chatTitle = null;
     }
@@ -101,6 +102,10 @@ export const getCtxInfo = (ctx) => {
         messageType = res ? getMessageType(res) : getMessageType(callApiOptions?.payload);
         messageText = res ? getMessageText(res) : getMessageText(callApiOptions?.payload);
       }
+    }
+    if (!messageClass) {
+      messageClass = 'callApi';
+      messageType = method;
     }
   } else {
     direction = 'in';
@@ -151,7 +156,7 @@ export const getCtxInfo = (ctx) => {
   // } else {
   //   console.log('??? [ctx]', ctx, { method, action });
   // }
-  if (!messageClass) messageClass = method
+  if (!messageClass) messageClass = method;
   if (!messageClass) messageClass = '??';
 
   return {

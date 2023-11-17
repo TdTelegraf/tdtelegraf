@@ -21,6 +21,7 @@ const isTrim = true;
 
 export const loggerMiddleware = (ctx, next) => {
   const log = getBotLogger(ctx.botInfo);
+  const info = getCtxInfo(ctx);
   const {
     direction,
     method,
@@ -38,7 +39,7 @@ export const loggerMiddleware = (ctx, next) => {
     messageClass,
     messageType,
     messageText,
-  } = getCtxInfo(ctx);
+  } = info;
 
   let str = '';
   if (direction === 'in') {
@@ -69,6 +70,8 @@ export const loggerMiddleware = (ctx, next) => {
     } else {
       opponent.push(`(${chatName})`);
     }
+  } else if (direction === 'out') {
+    opponent.push(`${username(chatUsername) || chatTitle || chatId}`);
   }
 
   if (isTrim) {
@@ -101,6 +104,7 @@ export const loggerMiddleware = (ctx, next) => {
     str += ` ${JSON.stringify(omitNull({ action, method }))}}`;
   }
 
+  // console.log(info);
   log.debug(str);
 
   // const { action, user, chat, chatType } = getInfoFromCtx(ctx);
