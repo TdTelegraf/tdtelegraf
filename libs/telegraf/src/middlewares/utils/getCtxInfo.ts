@@ -50,7 +50,7 @@ export const getCtxInfo = (ctx) => {
 
   if (callApiOptions) {
     direction = 'out';
-    console.log('[callApiOptions]', callApiOptions);
+    // console.log('[callApiOptions]', callApiOptions);
 
     const isResArray = Array.isArray(callApiOptions?.res);
     const res = isResArray ? callApiOptions?.res[0] : callApiOptions?.subRes || callApiOptions?.res;
