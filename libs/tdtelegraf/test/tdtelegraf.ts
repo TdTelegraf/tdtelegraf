@@ -113,18 +113,20 @@ async function main() {
     });
     if (checkDownloadedRes.local.is_downloading_completed) {
       isDownloaded = true;
+      log.debug('async path is', checkDownloadedRes.local.path);
     }
   }
   const remoteFileSync = await bot.tdlib.invoke({
     _: 'getRemoteFile',
     remote_file_id: photos.photos[0][1].file_id,
   });
-  await bot.tdlib.invoke({
+  const resSyncDownload = await bot.tdlib.invoke({
     _: 'downloadFile',
     priority: 1,
     file_id: remoteFileSync.id,
     synchronous: true,
   });
+  log.debug('sync path is', resSyncDownload.local.path);
   // download file test end
 
   const res = await bot.telegram.sendMessage(
