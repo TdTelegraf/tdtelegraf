@@ -23,25 +23,25 @@ export const createSaveServiceMock = ({ log }): SaveService => ({
   },
   upsertUser: async (filter, data) => {
     log.debug('upsertUser', filter, Object.keys(data));
-    log.warn('upsertChat', data);
+    log.trace('upsertChat', data);
   },
   upsertChat: async (filter, data) => {
     log.debug('upsertChat', filter, Object.keys(data).join(','));
-    log.warn('upsertChat', data);
+    log.trace('upsertChat', data);
   },
   upsertMessage: async (filter, data) => {
     log.debug('upsertMessage', filter, Object.keys(data).join(','));
-    log.warn('upsertMessage', data);
+    log.trace('upsertMessage', data);
   },
   upsertDialog: async (filter, data) => {
     log.debug('upsertDialog', filter, Object.keys(data).join(','));
-    log.warn('upsertDialog', data);
+    log.trace('upsertDialog', data);
   },
   eventEmitter: {
     emit: (event, data) => {
       const filter = { botId: data.botId, chatId: data.chatId, event: data.event };
       log.debug('eventEmitter.emit', event, filter, Object.keys(data).join(','));
-      log.warn('eventEmitter.emit', data);
+      log.trace('eventEmitter.emit', data);
     },
   },
 });

@@ -312,7 +312,7 @@ export async function callApi(name, props: any, clientOptions: any) {
       await saveMock(`${name}.callApi.res.json`, tres);
       return tres;
     }
-    this.log.warn('[callApi]', `[${name}]`, props, clientOptions);
+    this.log.trace('[callApi]', `[${name}]`, props, clientOptions);
     return null;
   } catch (err) {
     log.warn('[callApi] err', err, { method: name, payload: props, options: clientOptions });

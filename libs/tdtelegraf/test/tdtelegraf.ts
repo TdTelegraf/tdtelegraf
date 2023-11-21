@@ -14,7 +14,14 @@ import { message } from 'telegraf/filters';
 
 import { TdTelegraf } from '../src/TdTelegraf';
 // import { botClientLoggerMiddleware, logOutcomingMessage, patchBotClient } from './commands/utils';
-import { accountPhone, databaseDirectory, debugChatId, filesDirectory, tdlOptions } from './config';
+import {
+  accountPhone,
+  databaseDirectory,
+  debugChatId,
+  debugUserId,
+  filesDirectory,
+  tdlOptions,
+} from './config';
 
 async function main() {
   const rl = Readline.createInterface({
@@ -78,6 +85,16 @@ async function main() {
     debugChatId,
     `I'm started on ${stage} in debug mode 🙈\n\n/ping\n/chatid\n/test`,
   );
+
+  const userInfo = await bot.telegram.getChat(debugUserId);
+  log.debug('[userInfo]', userInfo);
+  const photos = await bot.telegram.getUserProfilePhotos(debugUserId);
+  log.debug('[photos]', photos);
+  const chatInfo = await bot.telegram.getChat(debugChatId);
+  log.debug('[chatInfo]', chatInfo);
+  const administrators = await bot.telegram.getChatAdministrators(debugChatId);
+  log.debug('[administrators]', administrators);
+
   // log.debug('sendMessage', res);
 }
 

@@ -357,6 +357,6 @@ export async function convertToTelegrafMessage(message) {
     );
   }
 
-  this.log.trace('[convertToTelegrafMessage]', message, newMessage);
+  // this.log.trace('[convertToTelegrafMessage]', message, newMessage);
   return newMessage;
 }
