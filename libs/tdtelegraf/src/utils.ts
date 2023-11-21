@@ -122,6 +122,22 @@ export function convertBotInfo(rawBotInfo) {
   };
 }
 
+export function convertTDLChatTypeToTelegraf(type) {
+  switch (type) {
+    case 'chatTypeBasicGroup':
+      return 'group';
+    case 'chatTypePrivate':
+      return 'private';
+    case 'chatTypeSecret':
+      return 'secret';
+    case 'chatTypeSupergroup':
+      return 'supergroup';
+    default:
+      // TODO: error
+      return '';
+  }
+}
+
 export async function convertToTelegrafMessage(message) {
   const user = await this.tdlib.invoke({
     _: 'getUser',
@@ -131,19 +147,7 @@ export async function convertToTelegrafMessage(message) {
     _: 'getChat',
     chat_id: message.chat_id,
   });
-  let chatType = '';
-  if (chat.type._ === 'chatTypeBasicGroup') {
-    chatType = 'group';
-  }
-  if (chat.type._ === 'chatTypePrivate') {
-    chatType = 'private';
-  }
-  if (chat.type._ === 'chatTypeSecret') {
-    chatType = 'secret';
-  }
-  if (chat.type._ === 'chatTypeSupergroup') {
-    chatType = 'supergroup';
-  }
+  const chatType = convertTDLChatTypeToTelegraf(chat.type._);
   const from = {
     id: user.id,
     is_bot: user.type._ === 'userTypeBot',

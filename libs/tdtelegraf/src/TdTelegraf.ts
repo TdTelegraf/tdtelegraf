@@ -152,37 +152,6 @@ export class TdTelegraf extends LskTelegraf {
         return;
       }
       // @ts-ignore
-      ctx.telegram.getChat = (chatId) => {
-        // const user = await this.tdlib.invoke({
-        //   _: 'getUser',
-        //   user_id: message.sender_id.user_id,
-        // });
-        // const res = await this.tdlib.invoke({
-        //   _: 'getChat',
-        //   chat_id: chatId,
-        // });
-
-        this.log.warn('[getChat] TODO: implement', chatId);
-      };
-      // @ts-ignore
-      ctx.telegram.getUserProfilePhotos = async (userId: number, offset: number, limit: number) => {
-        const response = await this.tdlib.invoke({
-          _: 'getUserProfilePhotos',
-          user_id: userId,
-          offset: offset || 0,
-          limit: limit || 100,
-        });
-
-        const photos = response.photos.map((ph: any) =>
-          ph.sizes.map((size: any) => convertToPhotoSize(size)),
-        );
-
-        return {
-          total_count: response.total_count,
-          photos,
-        };
-      };
-      // @ts-ignore
       ctx.telegram.callApi = this.telegram.callApi;
 
       // this.log.trace('[ctx]', ctx);
