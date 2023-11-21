@@ -10,6 +10,7 @@ import {
   saveMiddleware,
   saveOutMiddleware,
 } from '@lskjs/telegraf/middlewares';
+import { delay } from 'fishbird';
 import { message } from 'telegraf/filters';
 
 import { TdTelegraf } from '../src/TdTelegraf';
@@ -29,7 +30,7 @@ async function main() {
     output: process.stdout,
   });
 
-  const bot = new TdTelegraf({
+  const bot: any = new TdTelegraf({
     ...tdlOptions,
     databaseDirectory,
     filesDirectory,
@@ -90,6 +91,41 @@ async function main() {
   log.debug('[chatInfo]', chatInfo);
   const administrators = await bot.telegram.getChatAdministrators(debugChatId);
   log.debug('[administrators]', administrators);
+  // download file test
+  const remoteFile = await bot.tdlib.invoke({
+    _: 'getRemoteFile',
+    remote_file_id: photos.photos[0][0].file_id,
+  });
+  await bot.tdlib.invoke({
+    _: 'downloadFile',
+    priority: 1,
+    file_id: remoteFile.id,
+    synchronous: false,
+  });
+  let isDownloaded = false;
+  while (!isDownloaded) {
+    // eslint-disable-next-line no-await-in-loop
+    await delay(1000);
+    // eslint-disable-next-line no-await-in-loop
+    const checkDownloadedRes = await bot.tdlib.invoke({
+      _: 'getFile',
+      file_id: remoteFile.id,
+    });
+    if (checkDownloadedRes.local.is_downloading_completed) {
+      isDownloaded = true;
+    }
+  }
+  const remoteFileSync = await bot.tdlib.invoke({
+    _: 'getRemoteFile',
+    remote_file_id: photos.photos[0][1].file_id,
+  });
+  await bot.tdlib.invoke({
+    _: 'downloadFile',
+    priority: 1,
+    file_id: remoteFileSync.id,
+    synchronous: true,
+  });
+  // download file test end
 
   const res = await bot.telegram.sendMessage(
     debugChatId,
