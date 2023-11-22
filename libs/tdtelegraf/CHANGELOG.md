@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.22.0](https://github.com/TdTelegraf/tdtelegraf/compare/v3.21.0...v3.22.0) (2023-11-22)
+
+
+### Bug Fixes
+
+* download file test ([48c2c12](https://github.com/TdTelegraf/tdtelegraf/commit/48c2c12a0958f0bf6bae956f3c0ac1dad6589451))
+* log with path ([a08af79](https://github.com/TdTelegraf/tdtelegraf/commit/a08af796b4877708c4ceadb3ea65febebf8c5389))
+* patch telegram not tdl ([e87d615](https://github.com/TdTelegraf/tdtelegraf/commit/e87d615701b6dd3e5ab2974bef91a46e616bcdc9))
+
+
+### Features
+
+* getChat and getChatAdministrators ([5fe8054](https://github.com/TdTelegraf/tdtelegraf/commit/5fe80544453bc64019d562434c0cb8cc18606504))
+
+
+
+
+
 # [3.21.0](https://github.com/TdTelegraf/tdtelegraf/compare/v3.20.3...v3.21.0) (2023-11-17)
 
 **Note:** Version bump only for package tdtelegraf
