@@ -15,6 +15,7 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
     if (messageClass !== 'message') return next();
 
     const promises = [];
+
     const { message } = ctx;
 
     const botId = ctx.botInfo?.id;
