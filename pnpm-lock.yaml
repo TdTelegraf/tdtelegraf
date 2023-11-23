@@ -82,7 +82,7 @@ importers:
         specifier: ^3.18.0
         version: 3.18.0
       '@lskjs/telegraf':
-        specifier: ^3.22.0
+        specifier: ^3.22.1
         version: link:../telegraf
       axios:
         specifier: ^1.6.0
