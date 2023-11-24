@@ -1,5 +1,20 @@
 /* eslint-disable default-case */
-import { map } from 'fishbird';
+import { delay, map } from 'fishbird';
+
+export function convertInputMessageContentTypeToTDL(item: string) {
+  switch (item) {
+    case 'audio':
+      return 'inputMessageAudio';
+    case 'document':
+      return 'inputMessageDocument';
+    case 'photo':
+      return 'inputMessagePhoto';
+    case 'video':
+      return 'inputMessageVideo';
+    default:
+      return '';
+  }
+}
 
 export function convertToMessageEntity(item) {
   let type = '';

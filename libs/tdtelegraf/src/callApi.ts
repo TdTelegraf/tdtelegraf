@@ -8,6 +8,7 @@ import { mkdir, writeFile } from 'fs/promises';
 import { uploadMedia } from './uploadMedia';
 import {
   convertBotChatActionToTDL,
+  convertInputMessageContentTypeToTDL,
   convertTDLChatTypeToTelegraf,
   convertToPhotoSize,
 } from './utils';
@@ -398,7 +399,7 @@ export async function callApi(name, props: any, clientOptions: any) {
         input_message_contents: await map(props.media, async (mediaItem) =>
           omitNull({
             // @ts-ignore
-            _: mediaItem?.type === 'video' ? 'inputMessageVideo' : 'inputMessagePhoto',
+            _: convertInputMessageContentTypeToTDL(mediaItem?.type),
             // @ts-ignore
             [mediaItem?.type]: {
               _: 'inputFileLocal',
