@@ -20,7 +20,7 @@
     "@lskjs/log": "^3.18.0",
     "@lskjs/telegraf": "^3.22.1",
     "axios": "^1.6.0",
-    "fishbird": "^0.21.0",
+    "fishbird": "^1.1.8",
     "prebuilt-tdlib": "^0.1008019.0",
     "tdl": "^7.4.0",
     "tdl-tdlib-addon": "^1.2.2",

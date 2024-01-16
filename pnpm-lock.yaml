@@ -88,8 +88,8 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0
       fishbird:
-        specifier: ^0.21.0
-        version: 0.21.0
+        specifier: ^1.1.8
+        version: 1.1.8
       prebuilt-tdlib:
         specifier: ^0.1008019.0
         version: 0.1008019.0
@@ -128,8 +128,8 @@ importers:
         specifier: ^3.17.0
         version: 3.18.0
       fishbird:
-        specifier: ^0.21.0
-        version: 0.21.0
+        specifier: ^1.1.8
+        version: 1.1.8
       p-timeout:
         specifier: ^4.1.0
         version: 4.1.0
@@ -4644,8 +4644,8 @@ packages:
     resolution: {integrity: sha512-5e/1j4kbpfTXCwLk7CMAsfComM8J1Mzc1ngxEFf+qIGAeUQR1coK0wq7OzocmSnstkoxWMjMto2xO+LoNz+lOg==}
     dev: true
 
-  /fishbird@0.21.0:
-    resolution: {integrity: sha512-s0rnEFmYNf25cz6zvt3uemnsW0TdH7vaH4RiE1Kgm18SP5Md156aMG/VMEHlybDYTCKvkvjO9hGDRftEm+/jKg==}
+  /fishbird@1.1.8:
+    resolution: {integrity: sha512-TX8e3QrhcjvewN/xPoc3YyqnEQ1KZLirX27s1GEljlKJ19LU3sm+yQmoifaEXK2IkFJFvidmp+kYm4xHZLNozA==}
     dev: false
 
   /flat-cache@3.1.1:
@@ -6647,6 +6647,7 @@ packages:
   /logfmt@1.3.2:
     resolution: {integrity: sha512-U0lelcaGWEfEITZQXs8y5HrJp2xa0BJ+KDfkkLJRmuKbQIEVGNv145FbaNekY4ZYHJSBBx8NLJitaPtRqLEkxQ==}
     hasBin: true
+    requiresBuild: true
     dependencies:
       split: 0.2.10
       through: 2.3.8

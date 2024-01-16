@@ -17,6 +17,7 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
     const promises = [];
 
     const { message } = ctx;
+    const updatedAt = new Date();
 
     const botId = ctx.botInfo?.id;
     const user = message?.from;
@@ -40,27 +41,35 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
       // TODO: cache
       // && !(await TelegramUserModel.findOne({ botId, userId }))) {
       const info = await ctx.telegram.getChat(userId);
+      const $set = {
+        ...user,
+        info: {
+          ...info,
+          updatedAt,
+        },
+      };
       const photos = await ctx.telegram.getUserProfilePhotos(userId);
-      const $set = { ...user, info, photos };
+      if (photos?.photos?.length) {
+        $set.info.photos = photos.photos;
+      }
       // console.log('[user]', $set);
       promises.push(service.upsertUser({ botId, userId }, omitTrash($set)));
     }
     if (chatId && !service.hasChat({ botId, chatId })) {
       // && !(await TelegramChatModel.findOne({ botId, chatId }))) {
       const info = await ctx.telegram.getChat(chatId);
-      let administrators;
-      let memberCount;
+      let $set = {
+        ...chat,
+        info: {
+          ...info,
+          updatedAt: new Date(),
+        },
+      };
       if (chat.type !== 'private') {
-        administrators = await ctx.telegram.getChatAdministrators(chatId);
+        $set.info.administrators = await ctx.telegram.getChatAdministrators(chatId);
         // console.log('ctx.tdl, ', ctx.tdl);
         // memberCount = await ctx.tdl.getChatMemberCount(chatId);
       }
-      let $set = {
-        ...chat,
-        info,
-        administrators,
-        memberCount,
-      };
       if (message?.message_id) {
         $set = {
           ...$set,
@@ -85,18 +94,6 @@ export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
           { lastMessage: omitTrash(message), updatedAt: new Date() },
         ),
       );
-
-      // await DialogModel.updateOne(
-      //   {
-      //     botId,
-      //     chatId,
-      //   },
-      //   {
-      //     $set: {
-      //       nextCronAt: new Date(),
-      //     },
-      //   },
-      // );
     } else {
       const log = getBotLogger(ctx.botInfo);
       if (
