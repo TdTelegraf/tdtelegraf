@@ -16,7 +16,7 @@ export function convertInputMessageContentTypeToTDL(item: string) {
   }
 }
 
-export function convertToMessageEntity(item) {
+export function convertToMessageEntity(item: any) {
   let type = '';
   switch (item.type._) {
     case 'textEntityTypeMention':
@@ -109,7 +109,7 @@ export function convertBotChatActionToTDL(action: string) {
   }
 }
 
-export function convertToPhotoSize(item) {
+export function convertToPhotoSize(item: any) {
   let key = 'photo';
   if (item._ === 'thumbnail') {
     key = 'file';
@@ -123,7 +123,7 @@ export function convertToPhotoSize(item) {
   };
 }
 
-export function convertBotInfo(rawBotInfo) {
+export function convertBotInfo(rawBotInfo: any) {
   // TODO: юзернейма может не быть
   const username = rawBotInfo?.usernames?.editable_username || '';
   return {
@@ -137,7 +137,7 @@ export function convertBotInfo(rawBotInfo) {
   };
 }
 
-export function convertTDLChatTypeToTelegraf(type) {
+export function convertTDLChatTypeToTelegraf(type: any) {
   switch (type) {
     case 'chatTypeBasicGroup':
       return 'group';
@@ -153,7 +153,7 @@ export function convertTDLChatTypeToTelegraf(type) {
   }
 }
 
-export async function convertToTelegrafMessage(message) {
+export async function convertToTelegrafMessage(this: any, message: any) {
   const user = await this.tdlib.invoke({
     _: 'getUser',
     user_id: message.sender_id.user_id,
@@ -309,7 +309,7 @@ export async function convertToTelegrafMessage(message) {
     newMessage.poll = {
       id: poll.id,
       question: poll.question,
-      options: poll.options.map((item) => {
+      options: poll.options.map((item: any) => {
         if (item._ === 'pollOption') {
           return {
             text: item.text,

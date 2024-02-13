@@ -5,84 +5,82 @@
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
   "private": false,
   "scripts": {
-    "dev": "            lsk run dev",
-    "build": "          lsk run build",
-    "test": "           echo ok",
-    "prepack": "        lsk run prepack",
-    "release": "        lsk run release"
+    "dev": "            ycmd dev",
+    "build": "          ycmd build",
+    "test": "           ycmd test",
+    "prepack": "        ycmd prepack",
+    "release": "        ycmd release"
   },
   "dependencies": {
-    "@lskjs/algos": "^3.17.0",
-    "@lskjs/env": "^3.18.0",
-    "@lskjs/log": "^3.17.0",
+    "@lsk4/algos": "^4.9.0",
+    "@lsk4/env": "^4.6.0",
+    "@lsk4/log": "^4.6.0",
     "fishbird": "^1.1.8",
     "p-timeout": "^4.1.0",
     "typegram": "^4.3.0"
   },
   "devDependencies": {
-    "telegraf": "^4.12.2"
+    "telegraf": "^4.15.3"
   },
   "peerDependencies": {
     "telegraf": "^4.12.2"
   },
   "//": "///////////========================/////////========================/////////========================//////////",
-  "prettier": "@lskjs/eslint-config/prettier",
+  "prettier": "@lsk4/eslint-config/prettier",
   "eslintConfig": {
-    "extends": "@lskjs/eslint-config",
+    "extends": "@lsk4/eslint-config",
     "rules": {
       "import/named": "warn"
     }
-  },
-  "jest": {
-    "preset": "@lskjs/jest-config"
   },
   "files": [
     "lib",
     "README.md",
     "LICENCE"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+
+  "main": "cjs/index.js",
+  "types": "cjs/index.d.ts",
   "exports": {
     ".": {
-      "import": "./lib/index.mjs",
-      "types": "./lib/index.d.ts",
-      "default": "./lib/index.js"
+      "import": "./lib/index.js",
+      "types": "./cjs/index.d.ts",
+      "default": "./cjs/index.js"
     },
     "./*": {
-      "import": "./lib/*.mjs",
-      "types": "./lib/*.d.ts",
-      "default": "./lib/*.js"
+      "import": "./lib/*.js",
+      "types": "./cjs/*.d.ts",
+      "default": "./cjs/*.js"
     },
     "./middlewares": {
-      "import": "./lib/middlewares/index.mjs",
-      "types": "./lib/middlewares/index.d.ts",
-      "default": "./lib/middlewares/index.js"
+      "import": "./lib/middlewares/index.js",
+      "types": "./cjs/middlewares/index.d.ts",
+      "default": "./cjs/middlewares/index.js"
     },
     "./middlewares/*": {
-      "import": "./lib/middlewares/*.mjs",
-      "types": "./lib/middlewares/*.d.ts",
-      "default": "./lib/middlewares/*.js"
+      "import": "./lib/middlewares/*.js",
+      "types": "./cjs/middlewares/*.d.ts",
+      "default": "./cjs/middlewares/*.js"
     },
     "./commands": {
-      "import": "./lib/commands/index.mjs",
-      "types": "./lib/commands/index.d.ts",
-      "default": "./lib/commands/index.js"
+      "import": "./lib/commands/index.js",
+      "types": "./cjs/commands/index.d.ts",
+      "default": "./cjs/commands/index.js"
     },
     "./commands/*": {
-      "import": "./lib/commands/*.mjs",
-      "types": "./lib/commands/*.d.ts",
-      "default": "./lib/commands/*.js"
+      "import": "./lib/commands/*.js",
+      "types": "./cjs/commands/*.d.ts",
+      "default": "./cjs/commands/*.js"
     },
     "./utils": {
-      "import": "./lib/utils/index.mjs",
-      "types": "./lib/utils/index.d.ts",
-      "default": "./lib/utils/index.js"
+      "import": "./lib/utils/index.js",
+      "types": "./cjs/utils/index.d.ts",
+      "default": "./cjs/utils/index.js"
     },
     "./utils/*": {
-      "import": "./lib/utils/*.mjs",
-      "types": "./lib/utils/*.d.ts",
-      "default": "./lib/utils/*.js"
+      "import": "./lib/utils/*.js",
+      "types": "./cjs/utils/*.d.ts",
+      "default": "./cjs/utils/*.js"
     }
   },
   "size-limit": [

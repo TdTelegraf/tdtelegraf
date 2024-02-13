@@ -5,58 +5,56 @@
   "author": "Igor Suvorov <hi@isuvorov.com> (https://github.com/isuvorov)",
   "private": false,
   "scripts": {
-    "dev": "              lsk run dev",
+    "dev": "              ycmd dev",
     "debug": "            nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
     "debug:telegraf": "   nodemon --watch src --watch test --ext ts --exec \"ts-node test/telegraf.ts\"",
     "debug:tdtelegraf": " nodemon --watch src --watch test --ext ts --exec \"ts-node test/tdtelegraf.ts\"",
-    "build": "            lsk run build",
-    "test": "             echo skip",
-    "release": "          lsk run release"
+    "test": "             ycmd test",
+    "build": "            ycmd build",
+    "prepack": "          ycmd prepack",
+    "release": "          ycmd release"
   },
   "dependencies": {
-    "@lskjs/algos": "^3.18.0",
-    "@lskjs/env": "^3.18.0",
-    "@lskjs/err": "^3.18.0",
-    "@lskjs/log": "^3.18.0",
+    "@lsk4/algos": "^4.9.0",
+    "@lsk4/env": "^4.6.0",
+    "@lsk4/err": "^4.9.0",
+    "@lsk4/log": "^4.6.0",
     "@lskjs/telegraf": "^3.22.2",
-    "axios": "^1.6.0",
+    "axios": "^1.6.7",
     "fishbird": "^1.1.8",
-    "prebuilt-tdlib": "^0.1008019.0",
+    "prebuilt-tdlib": "^0.1008023.0",
     "tdl": "^7.4.0",
     "tdl-tdlib-addon": "^1.2.2",
-    "telegraf": "^4.15.0"
+    "telegraf": "^4.15.3"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.7",
-    "@types/node": "^20.8.10",
-    "dotenv": "^16.3.1",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.17",
+    "dotenv": "^16.4.3",
     "source-map-support": "^0.5.21"
   },
   "//": "///////////========================/////////========================/////////========================/////////",
-  "prettier": "@lskjs/eslint-config/prettier",
+  "prettier": "@lsk4/eslint-config/prettier",
   "eslintConfig": {
-    "extends": "@lskjs/eslint-config"
-  },
-  "jest": {
-    "preset": "@lskjs/jest-config"
+    "extends": "@lsk4/eslint-config"
   },
   "files": [
     "lib",
     "README.md",
     "LICENCE"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "cjs/index.js",
+  "types": "cjs/index.d.ts",
   "exports": {
     ".": {
-      "import": "./lib/index.mjs",
-      "types": "./lib/index.d.ts",
-      "default": "./lib/index.js"
+      "import": "./lib/index.js",
+      "types": "./cjs/index.d.ts",
+      "default": "./cjs/index.js"
     },
     "./*": {
-      "import": "./lib/*.mjs",
-      "types": "./lib/*.d.ts",
-      "default": "./lib/*.js"
+      "import": "./lib/*.js",
+      "types": "./cjs/*.d.ts",
+      "default": "./cjs/*.js"
     }
   },
   "///": "//////////========================/////////========================/////////========================/////////",

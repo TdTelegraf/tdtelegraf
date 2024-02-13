@@ -1,7 +1,8 @@
-import { log } from '@lskjs/log/log';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
+
+import { log } from './log';
 
 const isDebug = false;
 
@@ -13,7 +14,7 @@ function generateRandomFilename() {
 }
 
 // TODO: do not save file on disk, just return buffer
-export const downloadFile = async (url, directoryPath) => {
+export const downloadFile = async (url: string, directoryPath: string) => {
   // Generate a random filename
   const filename = generateRandomFilename();
   const filePath = path.join(directoryPath, filename);

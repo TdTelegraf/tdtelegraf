@@ -1,5 +1,5 @@
-import { stage } from '@lskjs/env';
+import { stage } from '@lsk4/env';
 
-export async function onPingCommand(ctx) {
+export async function onPingCommand(ctx: any) {
   ctx.reply(`Pong stage=${stage}`, { reply_to_message_id: ctx.message.message_id });
 }

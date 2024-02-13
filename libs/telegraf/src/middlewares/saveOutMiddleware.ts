@@ -1,6 +1,6 @@
-import { log as globalLog } from '@lskjs/log/log';
 import { map } from 'fishbird';
 
+import { log as globalLog } from '../utils/log';
 import { omitTrash } from '.';
 import { getCtxInfo } from './utils/getCtxInfo';
 import { saveServiceMock } from './utils/saveServiceMock';
@@ -10,7 +10,7 @@ const mutedMethods = ['getMe', 'getUpdates', 'deleteWebhook'];
 
 export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =>
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function saveOutMiddleware(ctx, next) {
+  async function saveOutMiddleware(ctx: any, next: any) {
     if (mutedMethods.includes(ctx?.callApiOptions?.method)) return next();
     if (!ctx.botInfo) {
       globalLog.warn('!!!ctx.botInfo', ctx.botInfo);
@@ -50,7 +50,12 @@ export const createSaveOutMiddleware = ({ service }: { service: SaveService }) =
       return next();
     }
     if (!messageId) {
-      globalLog.error('createSaveOutMiddleware FIX: this !messageId 22', messageClass, message, ctx);
+      globalLog.error(
+        'createSaveOutMiddleware FIX: this !messageId 22',
+        messageClass,
+        message,
+        ctx,
+      );
       return next();
     }
     const $set = {

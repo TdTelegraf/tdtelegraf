@@ -1,22 +1,34 @@
-import type { Options } from 'tsup';
-
-const env = process.env.NODE_ENV;
-
-export const tsup: Options = {
-  splitting: false,
-  clean: true,
-  dts: true,
+export const options = {
+  entry: ['src/**/*.tsx?'],
+  treeshake: true,
   sourcemap: true,
-  format: ['cjs', 'esm'], // 'iife',
-  outExtension: ({ format }) => ({ js: format === 'esm' ? '.mjs' : '.js' }),
-  minify: env === 'production',
-  bundle: env === 'production',
-  skipNodeModulesBundle: true,
-  metafile: env === 'development',
-  // entryPoints: ['src/index.ts'],
-  watch: env === 'development',
-  target: 'esnext',
-  outDir: 'lib',
+  splitting: true,
   platform: 'node',
-  entry: ['src/**/*.ts'], // include all files under src
+  shims: true,
+  dts: true,
+  outDir: 'lib',
 };
+
+export const optionsESM = {
+  ...options,
+  format: 'esm',
+  dts: true,
+  outExtension: () => ({ js: '.js', dts: '.d.ts' }),
+  outDir: 'lib',
+};
+
+export const optionsCJS = {
+  ...options,
+  format: 'cjs',
+  dts: {
+    compilerOptions: {
+      target: 'ES5',
+      module: 'commonjs',
+      moduleResolution: 'node',
+    },
+  },
+  outExtension: () => ({ js: '.js', dts: '.d.ts' }),
+  outDir: 'cjs',
+};
+
+export default [optionsCJS, optionsESM];

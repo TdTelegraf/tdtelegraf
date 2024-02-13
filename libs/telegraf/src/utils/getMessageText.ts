@@ -1,4 +1,4 @@
-export function getMessageText(message) {
+export function getMessageText(message: any) {
   if (!message) return null;
   if (message.text) return message.text;
   if (message.caption) return message.caption;

@@ -3,7 +3,7 @@
 import { getMessageType } from '../../utils/getMessageType';
 import { getBotLogger } from './getBotLogger';
 
-export const getInfoFromCtx = (ctx) => {
+export const getInfoFromCtx = (ctx: any) => {
   const { botInfo } = ctx;
 
   const message = ctx?.update?.message;

@@ -1,7 +1,7 @@
 import Readline from 'node:readline/promises';
 
-import { stage } from '@lskjs/env';
-import { log } from '@lskjs/log/log';
+import { stage } from '@lsk4/env';
+import { log } from '@lsk4/log/log';
 import { onChatIdCommand, onPingCommand, onTestCommand } from '@lskjs/telegraf/commands';
 import {
   ignoreMiddleware,

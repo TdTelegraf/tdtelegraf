@@ -1,7 +1,7 @@
 import { mkdirSync } from 'node:fs';
 import Readline from 'node:readline/promises';
 
-import { log } from '@lskjs/log/log';
+import { log } from '@lsk4/log/log';
 import { Client } from 'tdl';
 import { TDLib } from 'tdl-tdlib-addon';
 

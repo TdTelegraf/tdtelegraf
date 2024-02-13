@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { omitNull } from '@lskjs/algos';
+import { omitNull } from '@lsk4/algos';
 
 import { getBotLogger } from './utils/getBotLogger';
 import { getCtxInfo } from './utils/getCtxInfo';
@@ -7,8 +7,8 @@ import { getCtxInfo } from './utils/getCtxInfo';
 // const isDebug = isDev;
 const isDebug = false;
 
-const username = (str) => (str ? `@${str}` : null);
-const fixWidth = (rawStr, maxLength = 30, dots = '..') => {
+const username = (str: any) => (str ? `@${str}` : null);
+const fixWidth = (rawStr: string, maxLength = 30, dots = '..') => {
   const str = rawStr.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
   const maxStrLength = maxLength - dots.length;
   if (str.length > maxStrLength) {
@@ -19,7 +19,7 @@ const fixWidth = (rawStr, maxLength = 30, dots = '..') => {
 
 const isTrim = true;
 
-export const loggerMiddleware = (ctx, next) => {
+export const loggerMiddleware = (ctx: any, next: any) => {
   const log = getBotLogger(ctx.botInfo);
   const info = getCtxInfo(ctx);
   const {
@@ -57,12 +57,12 @@ export const loggerMiddleware = (ctx, next) => {
     chatType === 'private'
       ? null
       : chatType === 'group'
-      ? null
-      : chatType === 'supergroup'
-      ? null
-      : chatType === 'channel'
-      ? 'ch'
-      : chatType;
+        ? null
+        : chatType === 'supergroup'
+          ? null
+          : chatType === 'channel'
+            ? 'ch'
+            : chatType;
 
   if (chatType !== 'private') {
     if (chatType2) {

@@ -3,7 +3,7 @@
 import { getMessageText } from '../../utils/getMessageText';
 import { getMessageType } from '../../utils/getMessageType';
 
-export const getTitle = (info) => {
+export const getTitle = (info: any) => {
   if (!info) return null;
   if (info.title) return info.title;
   if (info.first_name || info.last_name) {
@@ -12,7 +12,7 @@ export const getTitle = (info) => {
   return null;
 };
 
-const getPrimaryKey = (ctx) => {
+const getPrimaryKey = (ctx: any) => {
   const ignoredCtxKeys = ['telegram', 'botInfo', 'state'];
   const ignoredUpdateKeys = ['update_id', 'botInfo', 'state'];
   const keys = Object.keys(ctx).filter(
@@ -21,7 +21,7 @@ const getPrimaryKey = (ctx) => {
   return keys[0];
 };
 
-export const getCtxInfo = (ctx) => {
+export const getCtxInfo = (ctx: any) => {
   const { botInfo } = ctx;
   const callApiOptions = ctx?.callApiOptions;
 
@@ -94,9 +94,9 @@ export const getCtxInfo = (ctx) => {
       // TODO: check media
       messageType = res ? getMessageType(res) : getMessageType(callApiOptions?.payload);
       if (isResArray) {
-        const types = callApiOptions?.res.map((item) => getMessageType(item));
+        const types = callApiOptions?.res.map((item: any) => getMessageType(item));
         messageType = `media ${types.join(',')}`;
-        const texts = callApiOptions?.res.map((item) => getMessageText(item));
+        const texts = callApiOptions?.res.map((item: any) => getMessageText(item));
         messageText = texts.filter(Boolean).join(' ');
       } else {
         messageType = res ? getMessageType(res) : getMessageType(callApiOptions?.payload);

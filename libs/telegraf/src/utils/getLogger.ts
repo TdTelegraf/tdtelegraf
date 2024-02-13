@@ -1,4 +1,4 @@
-import { createLogger, ILogger } from '@lskjs/log';
+import { createLogger, ILogger } from '@lsk4/log';
 
 const loggers: Record<string, ILogger> = {};
 export const getLogger = (botInfo: { id?: number | string; username?: string }) => {

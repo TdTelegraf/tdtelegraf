@@ -1,3 +1,19 @@
+.cache
+.idea
+
+**/.reports
+**/coverage
+**/.release
+**/lib
+**/cjs
+
+**/node_modules
+**/.DS_Store
+**/.env*
+**/!.env.example.*
+**/__*
+
+
 node_modules
 libs/*/lib
 libs/*/.release
@@ -5,3 +21,5 @@ libs/*/.reports
 tdlib
 **/.env*
 __*
+
+

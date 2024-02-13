@@ -1,4 +1,4 @@
-export const getMessageTypes = (message) => {
+export const getMessageTypes = (message: any) => {
   const types = [];
   if (message?.photo) types.push('photo');
   if (message?.video) types.push('video');

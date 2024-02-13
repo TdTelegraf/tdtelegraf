@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { stage } from '@lskjs/env';
-import { getEnvConfig, Logger } from '@lskjs/log';
+import { stage } from '@lsk4/env';
+import { getEnvConfig, Logger } from '@lsk4/log';
 import { Context, Telegram } from 'telegraf';
 // import { Opts } from 'telegraf/types';
 import { Opts, Typegram } from 'typegram';
@@ -47,7 +47,7 @@ export interface CallApiOptions {
 
 export class LskTelegram extends Telegram {
   telegraf: LskTelegraf;
-  constructor(telegraf, ...otherArgs: [any, any, any]) {
+  constructor(telegraf: any, ...otherArgs: [any, any, any]) {
     super(...otherArgs);
     this.telegraf = telegraf;
   }

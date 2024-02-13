@@ -1,4 +1,4 @@
-export function getMessageType(message) {
+export function getMessageType(message: any) {
   // console.log('getMessageType', message);
   // const { message } = ctx;
   if (message.audio) return 'audio';

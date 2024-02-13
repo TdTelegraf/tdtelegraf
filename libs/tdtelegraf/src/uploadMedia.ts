@@ -12,10 +12,10 @@ function generateRandomFilename() {
   return `${timestamp}-${randomString}`;
 }
 
-const isUrl = (str) =>
+const isUrl = (str: string) =>
   typeof str === 'string' && (str.startsWith('http://') || str.startsWith('https://'));
 
-export const uploadMedia = async (media, directoryPath = '/tmp') => {
+export const uploadMedia = async (media: any, directoryPath = '/tmp') => {
   if (!media) return null; // TODO: think about error maybe?
   const mediaItem = media?.source || media;
   if (media?.url) {

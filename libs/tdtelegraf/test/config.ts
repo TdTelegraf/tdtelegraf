@@ -1,4 +1,4 @@
-import { Err } from '@lskjs/err';
+import { Err } from '@lsk4/err';
 import dotenv from 'dotenv';
 import { getTdjson } from 'prebuilt-tdlib';
 

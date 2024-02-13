@@ -1,3 +1,15 @@
 {
-  "extends": "@lskjs/tsconfig/nostrict/tsconfig.json"
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext"],
+
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "strict": true
+  }
 }

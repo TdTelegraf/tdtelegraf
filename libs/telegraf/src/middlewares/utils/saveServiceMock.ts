@@ -1,4 +1,4 @@
-import { createLogger } from '@lskjs/log';
+import { createLogger } from '@lsk4/log';
 
 import { SaveService } from './types';
 
@@ -10,7 +10,7 @@ const log = createLogger({
 let saveMockIndex = 0;
 
 // eslint-disable-next-line no-shadow
-export const createSaveServiceMock = ({ log }): SaveService => ({
+export const createSaveServiceMock = ({ log }: any): SaveService => ({
   hasUser: (filter) => {
     if (++saveMockIndex > 4) return true;
     log.debug('hasUser', filter);

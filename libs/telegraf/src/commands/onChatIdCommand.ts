@@ -1,6 +1,6 @@
 import { getMessageType } from '../utils/getMessageType';
 
-export async function onChatIdCommand(ctx) {
+export async function onChatIdCommand(ctx: any) {
   const renderMessage = (message: any) =>
     `id: \`${message.message_id}\` [${getMessageType(message)}]`;
   const renderChat = (chat: any) =>

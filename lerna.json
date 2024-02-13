@@ -1,22 +1,21 @@
 {
-  "version": "3.22.2",
-  "npmClient": "pnpm",
-  "debug": {
-    "useWorkspaces": true
-  },
-  "command": {
-    "publish": {
-      "allowBranch": [
-        "master",
-        "beta"
-      ],
-      "conventionalCommits": true,
-      "ignoreChanges": [
-        "ignored-file",
-        "pnpm-lock.yaml",
-        "*.md"
-      ],
-      "message": "chore(release): 🎉 publish %s"
+    "version": "3.22.2",
+    "npmClient": "pnpm",
+    "useWorkspaces": true,
+    "command": {
+      "publish": {
+        "allowBranch": [
+          "master",
+          "beta"
+        ],
+        "conventionalCommits": true,
+        "ignoreChanges": [
+          "ignored-file",
+          "pnpm-lock.yaml",
+          "*.md"
+        ],
+        "message": "chore(release): 🎉 publish %s"
+      }
     }
   }
-}
+  

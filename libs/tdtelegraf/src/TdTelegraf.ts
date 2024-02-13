@@ -1,9 +1,9 @@
 // import { Context } from 'telegraf/lib/context';
-// import { Logger } from '@lskjs/log';
+// import { Logger } from '@lsk4/log';
 import { mkdirSync } from 'node:fs';
 
-import { omit } from '@lskjs/algos';
-import { Logger } from '@lskjs/log';
+import { omit } from '@lsk4/algos';
+import { Logger } from '@lsk4/log';
 import { LskTelegraf } from '@lskjs/telegraf';
 import { Client, ClientOptions, createClient } from 'tdl';
 import { Context } from 'telegraf';
@@ -73,6 +73,7 @@ export class TdTelegraf extends LskTelegraf {
   botInfo: any;
   rawBotInfo: any;
   constructor(tdlibProps: TdTelegrafOptions) {
+    // @ts-ignore
     super(null, {});
     this.tdlibProps = tdlibProps;
     // TODO: прокинуть явно, без всякой магии
@@ -112,10 +113,10 @@ export class TdTelegraf extends LskTelegraf {
   command(command, cb) {
     this.commandListeners.add([command, cb]);
   }
-  async onTdlError(err) {
+  async onTdlError(err: any) {
     this.log.error('[err]', err);
   }
-  async onTdlUpdate(msg) {
+  async onTdlUpdate(msg: any) {
     const action = msg._;
     await saveMock(`${action}.tdlib.update.json`, msg);
     if (ignoredActions.includes(action)) {
@@ -200,14 +201,14 @@ export class TdTelegraf extends LskTelegraf {
         .invoke({
           _: 'getMe',
         })
-        .then((rawBotInfo) => {
+        .then((rawBotInfo: any) => {
           // this._botInfo = convertBotInfo(raw);
           // @ts-ignore
           this.rawBotInfo = rawBotInfo;
           // @ts-ignore
           this.botInfo = convertBotInfo(rawBotInfo);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           this.log.error('TODO: [updateBotInfo]', err);
         });
     }
@@ -224,7 +225,10 @@ export class TdTelegraf extends LskTelegraf {
     this.tdlib.close(); // TODO: await?
     const onStop = this.tdlibProps?.onStop || function () {};
     // eslint-disable-next-line no-return-await
-    return await onStop.call(this, signal);
+
+    // @ts-ignore
+    const res = await onStop.call(this, signal);
+    return res;
   }
 }
 

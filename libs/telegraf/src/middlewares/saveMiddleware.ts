@@ -1,16 +1,18 @@
-import { omit } from '@lskjs/algos';
-import { isDev } from '@lskjs/env';
-import { log as globalLog } from '@lskjs/log/log';
+import { omit } from '@lsk4/algos';
+import { isDev } from '@lsk4/env';
 
+import { log as globalLog } from '../utils/log';
 import { getBotLogger } from './utils/getBotLogger';
 import { getCtxInfo } from './utils/getCtxInfo';
 import { saveServiceMock } from './utils/saveServiceMock';
 import { SaveService } from './utils/types';
 
-export const omitTrash = isDev ? (value) => omit(value, ['_raw', '_content']) : (a) => a;
+export const omitTrash = isDev
+  ? (value: Record<string, any>) => omit(value, ['_raw', '_content'])
+  : (a: any) => a;
 
 export const createSaveMiddleware = ({ service }: { service: SaveService }) =>
-  async function saveMiddleware(ctx, next) {
+  async function saveMiddleware(ctx: any, next: any) {
     const { messageClass } = getCtxInfo(ctx);
     if (messageClass !== 'message') return next();
 

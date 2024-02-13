@@ -1,7 +1,7 @@
-import { stage } from '@lskjs/env';
-import { log as globalLog } from '@lskjs/log/log';
+import { stage } from '@lsk4/env';
 import { map } from 'fishbird';
 
+import { log as globalLog } from '../utils/log';
 import { loggerMiddleware } from '.';
 import { getBotLogger } from './utils/getBotLogger';
 
@@ -10,7 +10,7 @@ const isDebug = stage === 'isuvorov';
 const mutedMethods = ['getMe', 'getUpdates', 'deleteWebhook'];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function loggerOutMiddleware(ctx, next) {
+export async function loggerOutMiddleware(ctx: any, next: any) {
   // if (ctx.loggerOutMiddleware) return next(); // NOTE: вырубить когда никита починит
 
   if (mutedMethods.includes(ctx?.callApiOptions?.method)) return next();

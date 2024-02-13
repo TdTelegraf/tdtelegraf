@@ -1,10 +1,10 @@
-import { omitNull } from '@lskjs/algos';
-import { isDev } from '@lskjs/env';
-import { Err } from '@lskjs/err';
-import { log } from '@lskjs/log/log';
+import { omitNull } from '@lsk4/algos';
+import { isDev } from '@lsk4/env';
+import { Err } from '@lsk4/err';
 import { map } from 'fishbird';
 import { mkdir, writeFile } from 'fs/promises';
 
+import { log } from './log';
 import { uploadMedia } from './uploadMedia';
 import {
   convertBotChatActionToTDL,
@@ -13,7 +13,7 @@ import {
   convertToPhotoSize,
 } from './utils';
 
-const saveMock = async (name, data) => {
+const saveMock = async (name: string, data: any) => {
   if (isDev) {
     const dirname = `${__dirname}/../../../__mocks`;
     await mkdir(dirname, { recursive: true });
@@ -21,9 +21,9 @@ const saveMock = async (name, data) => {
   }
 };
 
-const transformRes = (res) => {
+const transformRes = (res: any) => {
   if (Array.isArray(res?.messages)) {
-    return res?.messages?.map((item) => transformRes(item));
+    return res?.messages?.map((item: any) => transformRes(item));
   }
   return {
     message_id: res.id,
@@ -39,7 +39,7 @@ const transformRes = (res) => {
     text: res.content?.text?.text || res.content?.caption?.text,
   };
 };
-export async function callApi(name, props: any, clientOptions: any) {
+export async function callApi(this: any, name: string, props: any, clientOptions: any) {
   try {
     await saveMock(`${name}.callApi.req.json`, props);
     const extra = {
@@ -50,7 +50,7 @@ export async function callApi(name, props: any, clientOptions: any) {
           }
         : null,
     };
-    const wrapText = (rawText) => {
+    const wrapText = (rawText: any) => {
       if (['Markdown', 'MarkdownV2', 'HTML'].includes(props.parse_mode)) {
         let version: number | undefined;
         let _ = 'textParseModeHTML';

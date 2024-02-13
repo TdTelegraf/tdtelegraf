@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import { omitNull } from '@lskjs/algos';
+import { omitNull } from '@lsk4/algos';
 
 export function getTypingDelay(text: string, charsPerMinute = 200) {
   const ms = (text.length / charsPerMinute) * 60 * 1000;

@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { getEnvConfig, Logger } from '@lskjs/log';
+import { getEnvConfig, Logger } from '@lsk4/log';
 // import * as tg from '/core/types/typegram'
 import * as http from 'http';
 import pTimeout from 'p-timeout';

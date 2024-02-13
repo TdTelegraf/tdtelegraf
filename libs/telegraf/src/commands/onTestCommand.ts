@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
 import { createReadStream, readFileSync } from 'node:fs';
 
-import { log } from '@lskjs/log/log';
+import { createLogger } from '@lsk4/log';
 import { delay } from 'fishbird';
 import { Context } from 'telegraf';
 import { Update } from 'telegraf/types';
+
+const log = createLogger('test');
 
 const debugUserId = 1227280;
 
@@ -77,7 +79,7 @@ export const htmlExample = `
 
 const wait = () => delay(2000);
 
-export const createOnTestCommand = ({ assetsDir }) =>
+export const createOnTestCommand = ({ assetsDir }: { assetsDir: string }) =>
   async function onTestCommandSample(ctx: Context<Update>) {
     // @ts-ignore
     const cases = ctx.message?.text?.split(' ')[1]?.split(',') || null;
