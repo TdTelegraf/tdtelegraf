@@ -43,12 +43,13 @@ export async function callApi(this: any, name: string, props: any, clientOptions
   try {
     await saveMock(`${name}.callApi.req.json`, props);
     const extra = {
-      reply_to: props.reply_to_message_id
-        ? {
-            _: 'messageReplyToMessage',
-            message_id: props.reply_to_message_id,
-          }
-        : null,
+      reply_to: null,
+      // reply_to: props.reply_to_message_id
+      //   ? {
+      //       _: 'messageReplyToMessage',
+      //       message_id: props.reply_to_message_id,
+      //     }
+      //   : null,
     };
     const wrapText = (rawText: any) => {
       if (['Markdown', 'MarkdownV2', 'HTML'].includes(props.parse_mode)) {

@@ -1,3 +1,5 @@
+import './dotenv';
+
 import Readline from 'node:readline/promises';
 
 import { stage } from '@lsk4/env';
@@ -37,7 +39,7 @@ async function main() {
     async onStop() {
       log.warn('client.stop');
     },
-    async onLaunch() {
+    async onLaunch(this: any) {
       await this.tdlib.login(() => ({
         async getPhoneNumber() {
           log.warn('getPhoneNumber', accountPhone);
@@ -56,10 +58,10 @@ async function main() {
   });
 
   // NOTE: Default example from Telegraf tutorial: https://telegraf.js.org/
-  bot.start((ctx) => ctx.reply('Welcome'));
-  bot.help((ctx) => ctx.reply('Send me a sticker'));
-  bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
-  bot.hears('hi', (ctx) => ctx.reply('Hey there'));
+  bot.start((ctx: any) => ctx.reply('Welcome'));
+  bot.help((ctx: any) => ctx.reply('Send me a sticker'));
+  bot.on(message('sticker'), (ctx: any) => ctx.reply('👍'));
+  bot.hears('hi', (ctx: any) => ctx.reply('Hey there'));
   process.once('SIGINT', () => bot.stop('SIGINT'));
   process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
@@ -77,7 +79,7 @@ async function main() {
   bot.command('test', onTestCommand);
 
   //
-  bot.catch((err) => {
+  bot.catch((err: any) => {
     log.error('bot.catch', err);
   });
   await bot.launch();

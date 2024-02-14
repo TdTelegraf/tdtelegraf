@@ -5,3 +5,4 @@ export * from './getMessageType';
 export * from './getMessageTypes';
 export * from './patchBot';
 export * from './utils';
+export * from './waitFn';

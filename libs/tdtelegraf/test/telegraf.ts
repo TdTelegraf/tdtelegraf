@@ -1,3 +1,5 @@
+import './dotenv';
+
 // import { Logger } from '@lsk4/log';
 import { stage } from '@lsk4/env';
 import { log } from '@lsk4/log/log';

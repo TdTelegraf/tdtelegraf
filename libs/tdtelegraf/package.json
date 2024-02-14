@@ -9,6 +9,7 @@
     "debug": "            nodemon --watch src --watch test --ext ts --exec \"ts-node test/index.ts\"",
     "debug:telegraf": "   nodemon --watch src --watch test --ext ts --exec \"ts-node test/telegraf.ts\"",
     "debug:tdtelegraf": " nodemon --watch src --watch test --ext ts --exec \"ts-node test/tdtelegraf.ts\"",
+    "debug:ping": "       nodemon --watch src --watch test --ext ts --exec \"ts-node test/ping.ts\"",
     "test": "             ycmd test",
     "build": "            ycmd build",
     "prepack": "          ycmd prepack",

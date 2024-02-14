@@ -1,20 +1,18 @@
+import './dotenv';
+
 import { Err } from '@lsk4/err';
-import dotenv from 'dotenv';
 import { getTdjson } from 'prebuilt-tdlib';
 
 import { configure } from '../src/configure';
 
-dotenv.config({
-  path: `${__dirname}/../../../.env`,
-});
-dotenv.config();
+const TDLIB_API_ID = +(process.env.TDLIB_API_ID || '');
 
-if (!+process.env.TDLIB_API_ID) throw new Err('!TDLIB_API_ID');
+if (!TDLIB_API_ID) throw new Err('!TDLIB_API_ID');
 if (!process.env.TDLIB_API_HASH) throw new Err('!TDLIB_API_HASH');
 if (!process.env.TDLIB_ACCOUNT_PHONE) throw new Err('!TDLIB_ACCOUNT_PHONE');
 
 export const tdlOptions = {
-  apiId: +process.env.TDLIB_API_ID,
+  apiId: TDLIB_API_ID,
   apiHash: process.env.TDLIB_API_HASH,
 };
 

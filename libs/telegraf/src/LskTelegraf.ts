@@ -9,7 +9,7 @@ import { Update } from 'typegram';
 import { compactOptions } from './core/helpers/compact';
 import LskTelegram from './LskTelegram';
 import { MiddlewareFn } from './types';
-import { waitFn } from './utils/utils';
+import { waitFn } from './utils/waitFn';
 
 // export type OutMiddlewareOptions = {
 //   method: string;
